@@ -113,7 +113,7 @@
           </template>
         </b-table>
 
-        <Tips :listId="list.id" />
+        <Tips :list-id="list.id" />
       </b-tab>
 
       <template #tabs-end>
@@ -145,6 +145,7 @@ import Tips from './Tips.vue'
 
 export default {
     name: "NavList",
+    components: { Tips },
     data: function () {
         return {
             focusedIndex: 0,
@@ -255,7 +256,6 @@ export default {
             REMOVE_RECORD
         ])
     },
-    components: { Tips }
 }
 </script>
 

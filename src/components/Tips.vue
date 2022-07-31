@@ -48,7 +48,9 @@
         </ul>
       </template>
     </b-form-tags>
-    <p v-if="total > 0">Total tips: <b>{{ total }} pln</b></p>
+    <p v-if="total > 0">
+      Total tips: <b>{{ total }} pln</b>
+    </p>
   </div>
 </template>
 
