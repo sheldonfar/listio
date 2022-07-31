@@ -24,7 +24,6 @@
           </b-input-group-append>
         </b-input-group>
         <ul
-          id="my-custom-tags-list"
           class="list-unstyled d-inline-flex flex-wrap mb-0"
           aria-live="polite"
           aria-atomic="false"
@@ -32,6 +31,7 @@
         >
           <b-card
             v-for="tip in tips"
+            :id="tip.id"
             :key="tip.id"
             tag="li"
             class="mt-2 mr-2"
@@ -45,6 +45,12 @@
               aria-label="Remove tip"
               @click="removeTip(tip.id)"
             />
+            <b-tooltip
+              :target="tip.id"
+              triggers="hover"
+            >
+              Date: {{ new Date(tip.date).toLocaleDateString("pl-PL") }}
+            </b-tooltip>
           </b-card>
         </ul>
       </template>
