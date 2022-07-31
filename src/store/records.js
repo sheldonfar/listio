@@ -15,9 +15,6 @@ const state = {
 }
 
 const getters = {
-  getRecordById: store => (recordId) => {
-    return store.records.find(record => record.id === recordId)
-  },
   getListRecords: store => listId => store.records.filter(record => record.listId === listId)
 }
 

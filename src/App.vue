@@ -16,6 +16,7 @@ import Settings from '@/components/Settings.vue'
 
 import { LOAD_LISTS } from '@/store/lists'
 import { LOAD_RECORDS } from '@/store/records'
+import { LOAD_TIPS } from '@/store/tips'
 import { LOAD_SETTINGS } from '@/store/settings'
 
 export default {
@@ -28,12 +29,14 @@ export default {
     this[LOAD_SETTINGS]()
     this[LOAD_LISTS]()
     this[LOAD_RECORDS]()
+    this[LOAD_TIPS]()
   },
   methods: {
     ...mapActions([
       LOAD_SETTINGS,
       LOAD_LISTS,
       LOAD_RECORDS,
+      LOAD_TIPS,
     ])
   }
 }

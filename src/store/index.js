@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import lists from './lists'
 import records from './records'
+import tips from './tips'
 import settings from './settings'
 
 Vue.use(Vuex)
@@ -24,6 +25,7 @@ const store = new Vuex.Store({
   modules: {
     lists,
     records,
+    tips,
     settings,
   }
 })
