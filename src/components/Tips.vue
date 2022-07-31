@@ -12,6 +12,7 @@
             type="number"
             class="form-control"
             v-on="inputHandlers"
+            @blur="addTip(inputAttrs)"
           >
           <b-input-group-append>
             <b-button
@@ -72,6 +73,10 @@ export default {
     },
     methods: {
         addTip(inputAttrs) {
+            if (inputAttrs.value.length === 0) {
+              return
+            }
+            
             const newTip = {
                 value: +inputAttrs.value,
                 date: new Date().toISOString(),
