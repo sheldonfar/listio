@@ -1,7 +1,7 @@
 <template>
   <div
     id="app"
-    class="d-flex flex-column px-4"
+    class="d-flex flex-column px-2 px-md-4 mt-md-5 mt-4"
   >
     <Settings />
     <NavList />
@@ -48,6 +48,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>

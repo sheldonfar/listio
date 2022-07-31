@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex mb-2 w-25 align-self-end">
+  <div class="settings-container d-flex mb-2 align-self-end">
     <b-input-group
       size="lg"
       prepend="Hourly rate"
@@ -41,5 +41,7 @@ export default {
 </script>
 
 <style scoped>
-
+.settings-container {
+    max-width: 300px;
+}
 </style>

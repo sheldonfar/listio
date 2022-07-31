@@ -263,4 +263,5 @@ export default {
 .title {
   width: 300px;
 }
+
 </style>
