@@ -5,6 +5,7 @@
   >
     <Settings />
     <NavList />
+    <Totals />
   </div>
 </template>
 
@@ -13,6 +14,7 @@ import { mapActions } from 'vuex'
 
 import NavList from '@/components/NavList.vue'
 import Settings from '@/components/Settings.vue'
+import Totals from '@/components/Totals.vue'
 
 import { LOAD_LISTS } from '@/store/lists'
 import { LOAD_RECORDS } from '@/store/records'
@@ -23,7 +25,8 @@ export default {
   name: 'App',
   components: {
     Settings,
-    NavList
+    NavList,
+    Totals,
   },
    created () {
     this[LOAD_SETTINGS]()

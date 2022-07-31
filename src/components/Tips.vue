@@ -64,7 +64,6 @@ export default {
     computed: {
         ...mapGetters(["getListTips"]),
         tips() {
-            console.info("WWW", this.listId)
             return this.getListTips(this.listId);
         },
         total() {
@@ -73,7 +72,6 @@ export default {
     },
     methods: {
         addTip(inputAttrs) {
-            console.info("ADD TIP", inputAttrs)
             const newTip = {
                 value: +inputAttrs.value,
                 date: new Date().toISOString(),
