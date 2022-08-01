@@ -14,7 +14,8 @@ const state = {
 }
 
 const getters = {
-    getListTips: store => listId => store.tips.filter(tip => tip.listId === listId)
+    getListTips: store => listId => store.tips.filter(tip => tip.listId === listId),
+    getListTipsByType: store => (listId, type) => store.tips.filter(tip => tip.listId === listId && tip.type === type)
 }
 
 const mutations = {

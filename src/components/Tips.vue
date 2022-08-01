@@ -5,7 +5,7 @@
       class="mb-2"
     >
       <template #default="{ inputAttrs, inputHandlers }">
-        <b-input-group aria-controls="my-custom-tags-list">
+        <b-input-group class="root">
           <input
             v-bind="inputAttrs"
             placeholder="Tip"
@@ -15,6 +15,12 @@
             @blur="addTip(inputAttrs)"
           >
           <b-input-group-append>
+            <b-form-select
+              v-model="selectedTipType"
+              class="tip-type-select"
+              :options="tipTypes"
+              @click.native.capture.stop
+            />
             <b-button
               variant="primary"
               @click="addTip(inputAttrs)"
@@ -37,7 +43,7 @@
             class="mt-2 mr-2"
             body-class="py-1 px-2 text-nowrap d-flex align-items-center"
           >
-            <strong>{{ tip.value }} pln</strong>
+            <strong>{{ tip.type }} {{ tip.value }} pln</strong>
             <b-icon
               class="ml-4"
               icon="trash"
@@ -65,9 +71,16 @@
 import { mapGetters, mapActions } from 'vuex'
 
 import { ADD_TIP, REMOVE_TIP } from '@/store/tips'
+import TipTypes from '@/constants/tipTypes'
 
 export default {
     props: ['listId'],
+    data: function () {
+      return {
+        selectedTipType: TipTypes[0].value,
+        tipTypes: TipTypes,
+      }
+    },
     computed: {
         ...mapGetters(["getListTips"]),
         tips() {
@@ -87,6 +100,7 @@ export default {
                 value: +inputAttrs.value,
                 date: new Date().toISOString(),
                 listId: this.listId,
+                type: this.selectedTipType,
             }
 
             this[ADD_TIP](newTip);
@@ -104,6 +118,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+.root{ 
+  max-width: 300px;
+}
 
+.tip-type-select {
+  border-radius: 0;
+}
 </style>
