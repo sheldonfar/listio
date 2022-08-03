@@ -12,12 +12,11 @@
             type="number"
             class="form-control"
             v-on="inputHandlers"
-            @blur="addTip(inputAttrs)"
           >
           <b-input-group-append>
             <b-form-select
               v-model="selectedTipType"
-              class="tip-type-select"
+              class="rounded-0"
               :options="tipTypes"
               @click.native.capture.stop
             />
@@ -119,11 +118,7 @@ export default {
 </script>
 
 <style scoped>
-.root{ 
+.root { 
   max-width: 300px;
-}
-
-.tip-type-select {
-  border-radius: 0;
 }
 </style>

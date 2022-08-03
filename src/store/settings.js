@@ -1,17 +1,20 @@
 import { loadStore, saveToStore } from '../api'
 
 export const EDIT_HOURLY_RATE = 'settings/EDIT_HOURLY_RATE'
+export const EDIT_INTEREST_RATE = 'settings/EDIT_INTEREST_RATE'
 
 export const SET_SETTINGS = 'settings/SET_SETTINGS'
 export const SAVE_SETTINGS = 'settings/SAVE_SETTINGS'
 export const LOAD_SETTINGS = 'settings/LOAD_SETTINGS'
 
 const state = {
-  hourlyRate: 15
+  hourlyRate: 15,
+  interestRate: 23,
 }
 
 const getters = {
-  hourlyRate: store => store.hourlyRate
+  hourlyRate: store => store.hourlyRate,
+  interestRate: store => store.interestRate,
 }
 
 const mutations = {
@@ -20,12 +23,19 @@ const mutations = {
   },
   [EDIT_HOURLY_RATE] (state, rate) {
     state.hourlyRate = rate
+  },
+  [EDIT_INTEREST_RATE] (state, rate) {
+    state.interestRate = rate
   }
 }
 
 const actions = {
   async [EDIT_HOURLY_RATE] (context, rate) {
     context.commit(EDIT_HOURLY_RATE, rate)
+    await context.dispatch(SAVE_SETTINGS)
+  },
+  async [EDIT_INTEREST_RATE] (context, rate) {
+    context.commit(EDIT_INTEREST_RATE, rate)
     await context.dispatch(SAVE_SETTINGS)
   },
   async [LOAD_SETTINGS] (context) {

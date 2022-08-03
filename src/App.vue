@@ -19,6 +19,7 @@ import Totals from '@/components/Totals.vue'
 import { LOAD_LISTS } from '@/store/lists'
 import { LOAD_RECORDS } from '@/store/records'
 import { LOAD_TIPS } from '@/store/tips'
+import { LOAD_INTERESTS } from '@/store/interests'
 import { LOAD_SETTINGS } from '@/store/settings'
 
 export default {
@@ -33,6 +34,7 @@ export default {
     this[LOAD_LISTS]()
     this[LOAD_RECORDS]()
     this[LOAD_TIPS]()
+    this[LOAD_INTERESTS]()
   },
   methods: {
     ...mapActions([
@@ -40,6 +42,7 @@ export default {
       LOAD_LISTS,
       LOAD_RECORDS,
       LOAD_TIPS,
+      LOAD_INTERESTS,
     ])
   }
 }

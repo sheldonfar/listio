@@ -123,6 +123,8 @@
         </div>
   
         <Tips :list-id="list.id" />
+
+        <Interests :list-id="list.id" />
       </b-tab>
 
       <template #tabs-end>
@@ -151,10 +153,11 @@ import { mapGetters, mapActions } from 'vuex'
 import { EDIT_LIST, ADD_LIST, REMOVE_LIST } from '@/store/lists'
 import { ADD_RECORD, EDIT_RECORD, REMOVE_RECORD } from '@/store/records'
 import Tips from './Tips.vue'
+import Interests from './Interests.vue'
 
 export default {
     name: "NavList",
-    components: { Tips },
+    components: { Tips, Interests },
     data: function () {
         return {
             focusedIndex: 0,
