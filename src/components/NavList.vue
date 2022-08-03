@@ -38,81 +38,90 @@
             />
           </div>
         </template>
-        <b-table
-          hover
-          bordered
-          :items="records"
-          :fields="fields"
-        >
-          <template #cell(date)="data">
-            <b-form-datepicker
-              v-if="isRecordEditMode && focusedRecordId === data.item.id"
-              autofocus
-              :value="data.item.date"
-              @blur="handleEditRecordDate($event, data.item.id)"
-            />
-            <span v-else>{{ new Date(data.item.date).toLocaleDateString("pl-PL") }}</span>
-          </template>
+        <div class="table-responsive">
+          <b-table
+            hover
+            class="record-table"
+            bordered
+            :items="records"
+            :fields="fields"
+          >
+            <template #cell(date)="data">
+              <b-form-datepicker
+                v-if="isRecordEditMode && focusedRecordId === data.item.id"
+                autofocus
+                :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                locale="pl-PL"
+                :value="data.item.date"
+                @blur="handleEditRecordDate($event, data.item.id)"
+              />
+              <span v-else>{{ new Date(data.item.date).toLocaleDateString("pl-PL") }}</span>
+            </template>
 
-          <template #cell(value)="data">
-            <b-form-input
-              v-if="isRecordEditMode && focusedRecordId === data.item.id"
-              type="number"
-              :value="data.item.value"
-              @blur="handleEditRecordValue($event, data.item.id)"
-            />
-            <span v-else>{{ data.item.value }}</span>
-          </template>
+            <template #cell(value)="data">
+              <b-form-input
+                v-if="isRecordEditMode && focusedRecordId === data.item.id"
+                class="value-input"
+                type="number"
+                :value="data.item.value"
+                @blur="handleEditRecordValue($event, data.item.id)"
+              />
+              <span v-else>{{ data.item.value }}</span>
+            </template>
 
-          <template #cell(money)="data">
-            {{ data.item.value * hourlyRate }} pln
-          </template>
+            <template #cell(money)="data">
+              {{ data.item.value * hourlyRate }} pln
+            </template>
 
-          <template #cell(actions)="data">
-            <b-button
-              class="mr-2"
-              variant="info"
-              :disabled="isRecordEditMode"
-              @click="handleEnableRecordEditMode(data.item.id)"
-            >
-              Edit
-            </b-button>
-            <b-button
-              class="mr-2"
-              variant="dark"
-              @click="handleRemoveRecord(data.item.id)"
-            >
-              Delete
-            </b-button>
-          </template>
+            <template #cell(actions)="data">
+              <b-button
+                class="mr-2"
+                variant="info"
+                :disabled="isRecordEditMode"
+                @click="handleEnableRecordEditMode(data.item.id)"
+              >
+                Edit
+              </b-button>
+              <b-button
+                class="mr-2"
+                variant="dark"
+                @click="handleRemoveRecord(data.item.id)"
+              >
+                Delete
+              </b-button>
+            </template>
 
-          <template #custom-foot>
-            <tr>
-              <th>
-                <b-form-datepicker
-                  v-model="newRecordDate"
-                  autofocus
-                />
-              </th>
-              <th>
-                <b-form-input
-                  v-model="newRecordValue"
-                  type="number"
-                  @blur="handleAddRecord(list.id)"
-                />
-              </th>
-              <th />
-              <th />
-            </tr>
-            <tr>
-              <th />
-              <th>{{ totalHours }} hours</th>
-              <th>{{ totalMoney }} pln</th>
-              <th /> 
-            </tr>
-          </template>
-        </b-table>
-
+            <template #custom-foot>
+              <tr>
+                <th>
+                  <b-form-datepicker
+                    v-model="newRecordDate"
+                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
+                    autofocus
+                    locale="pl-PL"
+                  />
+                </th>
+                <th>
+                  <b-form-input
+                    v-model="newRecordValue"
+                    class="value-input"
+                    type="number"
+                    @blur="handleAddRecord(list.id)"
+                  />
+                </th>
+                <th />
+                <th />
+              </tr>
+              <tr>
+                <th />
+                <th>{{ totalHours }} hours</th>
+                <th>{{ totalMoney }} pln</th>
+                <th /> 
+              </tr>
+            </template>
+          </b-table>
+        </div>
+  
         <Tips :list-id="list.id" />
       </b-tab>
 
@@ -264,4 +273,11 @@ export default {
   width: 300px;
 }
 
+.record-table {
+  width: max-content;
+}
+
+.value-input {
+  max-width: fit-content;
+}
 </style>
