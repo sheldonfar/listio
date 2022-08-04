@@ -61,7 +61,7 @@
               Amount gross: {{ interest.value }} pln<br>
               Discount percent: {{ interest.discountPercent }}%<br>
               Discount amount: {{ interest.discountPercent * interest.value / 100 }} pln<br>
-              Procedure net: {{ getProcedureNetValue(interest, taxRate) }}
+              Procedure net: {{ getProcedureNetValue(interest, taxRate) }} pln<br>
               Amount net: {{ getInterestNetValue(interest, interestRate, taxRate) }} pln<br>
             </b-tooltip>
           </b-card>
