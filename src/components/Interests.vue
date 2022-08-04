@@ -14,13 +14,20 @@
             v-on="inputHandlers"
           >
           <b-input-group-append>
-            <input
-              v-model="discountPercent"
-              placeholder="Discount percent"
-              type="number"
-              class="form-control rounded-0"
-              @click.capture.stop
-            >
+            <b-input-group>
+              <input
+                v-model="discountPercent"
+                placeholder="Discount percent"
+                type="number"
+                class="form-control rounded-0"
+                @click.capture.stop
+              >
+              <b-input-group-append>
+                <b-input-group-text class="rounded-0">
+                  %
+                </b-input-group-text>
+              </b-input-group-append>
+            </b-input-group>
             <b-button
               variant="primary"
               @click="addInterest(inputAttrs)"
@@ -140,7 +147,7 @@ export default {
 
 <style scoped>
 .root { 
-  max-width: 450px;
+  max-width: 500px;
 }
 
 </style>

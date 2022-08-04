@@ -7,5 +7,5 @@ export const getProcedureNetValue = (interest, taxRate) => {
 }
 
 export const getInterestNetValue = (interest, interestRate, taxRate) => {
-    return getProcedureNetValue(interest, taxRate) * interestRate / 100
+    return Math.round(getProcedureNetValue(interest, taxRate) * interestRate / 100)
 }
