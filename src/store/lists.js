@@ -25,7 +25,6 @@ const state = {
       name: 'Default list 3'
     }
   ],
-  listsLoaded: false
 }
 
 const getters = {
@@ -36,7 +35,6 @@ const getters = {
 const mutations = {
   [SET_LISTS] (state, lists) {
     state.lists = lists
-    state.listsLoaded = true
   },
   [REMOVE_LIST] (state, listId) {
     state.lists = state.lists.filter(item => item.id !== listId)

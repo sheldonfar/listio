@@ -6,6 +6,8 @@ export const SET_RECORDS = 'records/SET_RECORDS'
 export const SAVE_RECORDS = 'records/SAVE_RECORDS'
 export const LOAD_RECORDS = 'records/LOAD_RECORDS'
 
+export const CLEAR_RECORDS = 'tips/CLEAR_RECORDS'
+
 export const ADD_RECORD = 'records/ADD_RECORD'
 export const EDIT_RECORD = 'records/EDIT_RECORD'
 export const REMOVE_RECORD = 'records/REMOVE_RECORD'
@@ -33,6 +35,9 @@ const mutations = {
     const oldRecord = state.records.find(item => item.id === record.id)
     Object.assign(oldRecord, record)
   },
+  [CLEAR_RECORDS] (state) {
+    state.records = []
+  },
   [REMOVE_RECORD] (state, recordId) {
     state.records = state.records.filter(({ id }) => id !== recordId)
   }
@@ -57,6 +62,14 @@ const actions = {
     if (records) {
       context.commit(SET_RECORDS, records)
     }
+  },
+  async [CLEAR_RECORDS] (context) {
+    context.commit(CLEAR_RECORDS)
+    await context.dispatch(SAVE_RECORDS)
+  },
+  async [SET_RECORDS] (context, records) {
+    context.commit(SET_RECORDS, records)
+    await context.dispatch(SAVE_RECORDS)
   },
   [SAVE_RECORDS] (context) {
     saveToStore('records', context.state.records)

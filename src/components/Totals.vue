@@ -10,7 +10,7 @@
       Total Procedure Earnings: <b>{{ totalInterests }} pln</b>
     </p>
     <p>
-      Total Money: <b>{{ totalSalary }} pln</b> salary + <b>{{ totalTips }} pln</b> tips + <b>{{ totalInterests }} pln</b> procedure earnings = <b>{{ totalMoney + totalTips }} pln</b>
+      Total Money: <b>{{ totalSalary }} pln</b> salary + <b>{{ totalTips }} pln</b> tips + <b>{{ totalInterests }} pln</b> procedure earnings = <b>{{ totalMoney }} pln</b>
     </p>
   </div>
 </template>
@@ -18,66 +18,18 @@
 <script>
 import { mapGetters } from 'vuex'
 
-import { getInterestNetValue } from '@/utils'
-
 export default {
     computed: {
         ...mapGetters([
-            "lists", 
-            "getListRecords",
-            "hourlyRate",
-            "interestRate", 
-            "taxRate", 
-            "getListTipsByType",
-            "getListInterests"
+            "totalHours", 
+            "totalCashTips",
+            "totalCardTips",
+            "totalTips",
+            "totalInterests",
+            "totalSalary",
+            "totalMoney"
         ]),
-        totalHours() {
-            return this.lists.reduce((acc, list) => {
-                const records = this.getListRecords(list.id)
-
-                return acc + records.reduce((recordsAcc, record) => {
-                    return recordsAcc + record.value
-                }, 0)
-            }, 0)
-        },
-        totalSalary() {
-            return this.totalHours * this.hourlyRate
-        },
-        totalCardTips() { 
-            return this.lists.reduce((acc, list) => {
-                const tips = this.getListTipsByType(list.id, 'card')
-
-                return acc + tips.reduce((tipsAcc, tip) => {
-                    return tipsAcc + tip.value
-                }, 0)
-            }, 0)
-        },
-        totalCashTips() {
-            return this.lists.reduce((acc, list) => {
-                const tips = this.getListTipsByType(list.id, 'cash')
-
-                return acc + tips.reduce((tipsAcc, tip) => {
-                    return tipsAcc + tip.value
-                }, 0)
-            }, 0)
-        },
-        totalTips() {
-            return this.totalCardTips + this.totalCashTips
-        },
-        totalInterests() {
-            return this.lists.reduce((acc, list) => {
-                const interests = this.getListInterests(list.id)
-
-                return acc + interests.reduce((interestsAcc, interest) => {
-                    const interestNetValue = getInterestNetValue(interest, this.interestRate, this.taxRate)
-
-                    return interestsAcc + interestNetValue
-                }, 0)
-            }, 0)   
-        },
-        totalMoney() {
-            return this.totalSalary + this.totalTips + this.totalInterests
-        },
+        
     },
 }
 </script>

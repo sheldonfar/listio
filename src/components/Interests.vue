@@ -68,8 +68,8 @@
               Amount gross: {{ interest.value }} pln<br>
               Discount percent: {{ interest.discountPercent }}%<br>
               Discount amount: {{ interest.discountPercent * interest.value / 100 }} pln<br>
-              Procedure net: {{ getProcedureNetValue(interest, taxRate) }} pln<br>
-              Amount net: {{ getInterestNetValue(interest, interestRate, taxRate) }} pln<br>
+              Procedure net: {{ getProcedureNetValue(interest.id) }} pln<br>
+              Amount net: {{ getInterestNetValue(interest.id) }} pln<br>
             </b-tooltip>
           </b-card>
         </ul>
@@ -86,8 +86,6 @@ import { mapGetters, mapActions } from 'vuex'
 
 import { ADD_INTEREST, REMOVE_INTEREST } from '@/store/interests'
 
-import { getInterestGrossValue, getInterestNetValue, getProcedureNetValue } from '@/utils'
-
 export default {
     props: ['listId'],
     data: function () {
@@ -96,18 +94,15 @@ export default {
       }
     },
     computed: {
-        ...mapGetters(["getListInterests", "interestRate", "taxRate"]),
+        ...mapGetters(["getListInterests", "getProcedureNetValue", "getInterestNetValue"]),
         interests() {
             return this.getListInterests(this.listId);
         },
         total() {
-            return this.interests.reduce((acc, interest) => acc + this.getInterestNetValue(interest, this.interestRate, this.taxRate), 0);
+            return this.interests.reduce((acc, interest) => acc + this.getInterestNetValue(interest.id), 0);
         },
     },
     methods: {
-        getInterestGrossValue,
-        getInterestNetValue,
-        getProcedureNetValue,
         getInterestDisplayValue(interest) {
           return `
             ${interest.value} pln gross
@@ -115,7 +110,7 @@ export default {
               ? `- ${interest.discountPercent}%` 
               : ''
             }
-            = ${this.getInterestNetValue(interest, this.interestRate, this.taxRate) } pln net
+            = ${this.getInterestNetValue(interest.id) } pln net
           `
         },
         addInterest(inputAttrs) {

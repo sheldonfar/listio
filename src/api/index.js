@@ -9,3 +9,7 @@ export const saveToStore = (storeName, state) => {
 
   localStorage.setItem(storeName, serializedState)
 }
+
+export const removeFromStore = (storeName) => {
+  localStorage.removeItem(storeName);
+}
