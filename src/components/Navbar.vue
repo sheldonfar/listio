@@ -6,6 +6,7 @@
       variant="dark"
     >
       <b-icon
+        v-if="archives.length > 0"
         v-b-toggle.sidebar-variant
         variant="light"
         size="lg"

@@ -1,6 +1,6 @@
 <template>
-  <div class="settings-container d-flex flex-column mb-2 align-self-end">
-    <div>
+  <div class="settings-container d-flex flex-column flex-md-row mb-2 align-self-end">
+    <div class="mx-2 my-2 my-md-0">
       <b-input-group
         size="lg"
         append="PLN"
@@ -18,7 +18,7 @@
         />
       </b-input-group>
     </div>
-    <div class="mt-2">
+    <div class="mx-2 my-2 my-md-0">
       <b-input-group
         size="lg"
         append="%"
@@ -36,7 +36,7 @@
         />
       </b-input-group>
     </div>
-    <div class="mt-2">
+    <div class="mx-2 my-2 my-md-0">
       <b-input-group
         size="lg"
         append="%"
@@ -92,10 +92,6 @@ export default {
 </script>
 
 <style scoped>
-.settings-container {
-    max-width: 300px;
-}
-
 .settings-input {
   width: 70px
 }
