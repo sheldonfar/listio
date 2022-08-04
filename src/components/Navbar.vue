@@ -25,6 +25,7 @@
       </span>
       <b-button
         v-if="currentArchive"
+        class="mr-2"
         variant="outline-primary"
         @click="handleClearCurrentArchive"
       >
@@ -33,10 +34,11 @@
 
       <b-navbar-nav class="ml-auto d-flex align-items-center">
         <span class="text-light">
-          Hours: {{ totalHours }}h / Earnings: {{ totalMoney }} pln
+          {{ totalHours }}h / {{ totalMoney }} pln
         </span>
 
         <b-button
+          v-if="!currentArchive"
           v-b-modal.confirm-archive-modal
           class="ml-4"
           variant="outline-danger"
