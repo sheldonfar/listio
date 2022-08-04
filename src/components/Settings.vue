@@ -25,6 +25,24 @@
       >
         <b-input-group-prepend>
           <b-input-group-text class="prepend-group-text">
+            Tax rate
+          </b-input-group-text>
+        </b-input-group-prepend>
+        <b-form-input
+          class="settings-input"
+          type="number"
+          :value="taxRate"
+          @change="handleEditTaxRate"
+        />
+      </b-input-group>
+    </div>
+    <div class="mt-2">
+      <b-input-group
+        size="lg"
+        append="%"
+      >
+        <b-input-group-prepend>
+          <b-input-group-text class="prepend-group-text">
             Interest rate
           </b-input-group-text>
         </b-input-group-prepend>
@@ -42,11 +60,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-import { EDIT_HOURLY_RATE, EDIT_INTEREST_RATE } from '@/store/settings'
+import { EDIT_HOURLY_RATE, EDIT_TAX_RATE, EDIT_INTEREST_RATE } from '@/store/settings'
 
 export default {
   computed: {
-    ...mapGetters(['hourlyRate', 'interestRate']),
+    ...mapGetters(['hourlyRate', 'taxRate', 'interestRate']),
     records () {
       const listId = this.lists[this.focusedIndex].id
       const records = this.getListRecords(listId)
@@ -58,11 +76,15 @@ export default {
     handleEditHourlyRate(value) {
       this[EDIT_HOURLY_RATE](value)
     },
+    handleEditTaxRate(value) {
+      this[EDIT_TAX_RATE](value)
+    },
     handleEditInterestRate(value) {
       this[EDIT_INTEREST_RATE](value)
     },
     ...mapActions([
       EDIT_HOURLY_RATE,
+      EDIT_TAX_RATE,
       EDIT_INTEREST_RATE,
     ])
   }

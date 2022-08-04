@@ -61,7 +61,8 @@
               Amount gross: {{ interest.value }} pln<br>
               Discount percent: {{ interest.discountPercent }}%<br>
               Discount amount: {{ interest.discountPercent * interest.value / 100 }} pln<br>
-              Amount net: {{ getInterestNetValue(interest) }} pln<br>
+              Procedure net: {{ getProcedureNetValue(interest, taxRate) }}
+              Amount net: {{ getInterestNetValue(interest, interestRate, taxRate) }} pln<br>
             </b-tooltip>
           </b-card>
         </ul>
@@ -78,6 +79,8 @@ import { mapGetters, mapActions } from 'vuex'
 
 import { ADD_INTEREST, REMOVE_INTEREST } from '@/store/interests'
 
+import { getInterestGrossValue, getInterestNetValue, getProcedureNetValue } from '@/utils'
+
 export default {
     props: ['listId'],
     data: function () {
@@ -86,21 +89,18 @@ export default {
       }
     },
     computed: {
-        ...mapGetters(["getListInterests", "interestRate"]),
+        ...mapGetters(["getListInterests", "interestRate", "taxRate"]),
         interests() {
             return this.getListInterests(this.listId);
         },
         total() {
-            return this.interests.reduce((acc, interest) => acc + this.getInterestNetValue(interest), 0);
+            return this.interests.reduce((acc, interest) => acc + this.getInterestNetValue(interest, this.interestRate, this.taxRate), 0);
         },
     },
     methods: {
-        getInterestGrossValue(interest) {
-          return interest.value - interest.discountPercent * interest.value / 100
-        },
-        getInterestNetValue(interest) {
-          return Math.round(this.getInterestGrossValue(interest) / (1 + this.interestRate / 100))
-        },
+        getInterestGrossValue,
+        getInterestNetValue,
+        getProcedureNetValue,
         getInterestDisplayValue(interest) {
           return `
             ${interest.value} pln gross
@@ -108,7 +108,7 @@ export default {
               ? `- ${interest.discountPercent}%` 
               : ''
             }
-            = ${this.getInterestNetValue(interest) } pln net
+            = ${this.getInterestNetValue(interest, this.interestRate, this.taxRate) } pln net
           `
         },
         addInterest(inputAttrs) {

@@ -18,9 +18,19 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import { getInterestNetValue } from '@/utils'
+
 export default {
     computed: {
-        ...mapGetters(["lists", "getListRecords", "hourlyRate", "interestRate", "getListTipsByType", "getListInterests"]),
+        ...mapGetters([
+            "lists", 
+            "getListRecords",
+            "hourlyRate",
+            "interestRate", 
+            "taxRate", 
+            "getListTipsByType",
+            "getListInterests"
+        ]),
         totalHours() {
             return this.lists.reduce((acc, list) => {
                 const records = this.getListRecords(list.id)
@@ -59,8 +69,7 @@ export default {
                 const interests = this.getListInterests(list.id)
 
                 return acc + interests.reduce((interestsAcc, interest) => {
-                    const interestGrossValue = interest.value - interest.discountPercent * interest.value / 100
-                    const interestNetValue = Math.round(interestGrossValue / (1 + this.interestRate / 100))
+                    const interestNetValue = getInterestNetValue(interest, this.interestRate, this.taxRate)
 
                     return interestsAcc + interestNetValue
                 }, 0)
