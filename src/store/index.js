@@ -63,6 +63,9 @@ const getters = {
           }, 0)
       }, 0)   
   },
+  totalMoneyNoCashTips: (store, getters) => {
+    return getters.totalSalary + getters.totalCardTips + getters.totalInterests
+  },
   totalMoney: (store, getters) => {
       return getters.totalSalary + getters.totalTips + getters.totalInterests
   },

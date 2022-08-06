@@ -34,7 +34,7 @@
 
       <b-navbar-nav class="ml-auto d-flex align-items-center">
         <span class="text-light">
-          {{ totalHours }}h / {{ totalMoney }} pln
+          {{ totalHours }}h / {{ totalMoneyNoCashTips }} pln
         </span>
 
         <b-button
@@ -121,7 +121,7 @@ export default {
       "archives",
       "currentArchive",
       "totalHours",
-      "totalMoney",
+      "totalMoneyNoCashTips",
     ]),
   },
   methods: {
