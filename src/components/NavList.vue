@@ -47,13 +47,10 @@
             :fields="fields"
           >
             <template #cell(date)="data">
-              <b-form-datepicker
+              <DatePicker
                 v-if="isRecordEditMode && focusedRecordId === data.item.id"
-                autofocus
-                :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                locale="pl-PL"
                 :value="data.item.date"
-                @blur="handleEditRecordDate($event, data.item.id)"
+                @dateSelected="handleEditRecordDate($event, data.item.id)"
               />
               <span v-else>{{ new Date(data.item.date).toLocaleDateString("pl-PL") }}</span>
             </template>
@@ -94,11 +91,9 @@
             <template #custom-foot>
               <tr>
                 <th>
-                  <b-form-datepicker
-                    v-model="newRecordDate"
-                    :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }"
-                    autofocus
-                    locale="pl-PL"
+                  <DatePicker
+                    :value="newRecordDate"
+                    @dateSelected="value => newRecordDate = value"
                   />
                 </th>
                 <th>
@@ -154,10 +149,11 @@ import { EDIT_LIST, ADD_LIST, REMOVE_LIST } from '@/store/lists'
 import { ADD_RECORD, EDIT_RECORD, REMOVE_RECORD } from '@/store/records'
 import Tips from './Tips.vue'
 import Interests from './Interests.vue'
+import DatePicker from './DatePicker.vue'
 
 export default {
     name: "NavList",
-    components: { Tips, Interests },
+    components: { Tips, Interests, DatePicker },
     data: function () {
         return {
             focusedIndex: 0,
@@ -241,13 +237,15 @@ export default {
         handleRemoveRecord(recordId) {
             this[REMOVE_RECORD](recordId);
         },
-        handleEditRecordDate(e, recordId) {
+        handleEditRecordDate(value, recordId) {
             const oldRecord = this.records.find(record => record.id === recordId);
             const newRecord = {
                 ...oldRecord,
-                date: e.target.value
+                date: value
             };
             this[EDIT_RECORD](newRecord);
+            this.isRecordEditMode = false;
+            this.focusedRecordId = undefined;
         },
         handleEditRecordValue(e, recordId) {
             const oldRecord = this.records.find(record => record.id === recordId);

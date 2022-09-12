@@ -5,10 +5,10 @@
       class="mb-2"
     >
       <template #default="{ inputAttrs, inputHandlers }">
-        <b-input-group class="root">
+        <b-input-group class="root flex-nowrap">
           <input
             v-bind="inputAttrs"
-            placeholder="Procedure cost"
+            placeholder="Cost"
             type="number"
             class="form-control"
             v-on="inputHandlers"
@@ -17,7 +17,7 @@
             <b-input-group>
               <input
                 v-model="discountPercent"
-                placeholder="Discount percent"
+                placeholder="Discount"
                 type="number"
                 class="form-control rounded-0"
                 @click.capture.stop
@@ -142,7 +142,11 @@ export default {
 
 <style scoped>
 .root { 
-  max-width: 500px;
+  width: 500px;
+  max-width: 100%;
+}
+.root > .form-control {
+  min-width: 90px;
 }
 
 </style>
