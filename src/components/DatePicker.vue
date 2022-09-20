@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-input-group v-b-modal="'datepicker-modal'">
+    <b-input-group @click="onInputClick">
       <template #prepend>
         <b-button
           variant="transparent"
@@ -9,17 +9,19 @@
           <b-icon icon="calendar" />
         </b-button>
       </template>
-      <label class="form-control border-left-0 cursor-pointer">
-        {{ dateContext.selectedFormatted }}
+      <label
+        class="form-control border-left-0"
+        role="button"
+      >
+        {{ new Date(value).toLocaleDateString('pl-PL') }}
       </label>
     </b-input-group>
     <b-modal
-      id="datepicker-modal"
+      ref="calendar-modal"
       centered
       hide-header
       hide-footer
       no-fade
-      static
       content-class="w-auto mx-auto"
     >
       <b-calendar
@@ -41,13 +43,15 @@
           return {
             dateValue: new Date(this.value),
             dateContext: {},
-          };
+          }
       },
       methods: {
+        onInputClick() {
+          this.$refs['calendar-modal'].show()
+        },
         onContext(ctx) {
             if (this.dateContext.selectedDate && ctx.selectedDate.toISOString() !== this.dateContext.selectedDate.toISOString()) {
-                this.$bvModal.hide('datepicker-modal')
-                console.info("EMIT",ctx.selectedDate.toISOString())
+                this.$refs['calendar-modal'].hide()
                 this.$emit('dateSelected', ctx.selectedDate.toISOString())
             }
             this.dateContext = ctx

@@ -60,6 +60,7 @@
                 v-if="isRecordEditMode && focusedRecordId === data.item.id"
                 class="value-input"
                 type="number"
+                min="0"
                 :value="data.item.value"
                 @blur="handleEditRecordValue($event, data.item.id)"
               />
@@ -101,6 +102,7 @@
                     v-model="newRecordValue"
                     class="value-input"
                     type="number"
+                    min="0"
                     @blur="handleAddRecord(list.id)"
                   />
                 </th>
