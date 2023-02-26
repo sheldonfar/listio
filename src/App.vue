@@ -9,6 +9,7 @@
       <NavList />
       <Totals />
     </div>
+    <Bottombar />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import Navbar from '@/components/Navbar.vue'
 import NavList from '@/components/NavList.vue'
 import Settings from '@/components/Settings.vue'
 import Totals from '@/components/Totals.vue'
+import Bottombar from '@/components/Bottombar.vue'
 
 import { LOAD_LISTS } from '@/store/lists'
 import { LOAD_RECORDS } from '@/store/records'
@@ -34,6 +36,7 @@ export default {
     Settings,
     NavList,
     Totals,
+    Bottombar,
   },
    created () {
     this[LOAD_SETTINGS]()
@@ -66,5 +69,6 @@ export default {
 
 #content {
   padding-top: 60px;
+  padding-bottom: 60px;
 }
 </style>

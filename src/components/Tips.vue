@@ -2,7 +2,6 @@
   <div>
     <b-form-tags
       no-outer-focus
-      class="mb-2"
     >
       <template #default="{ inputAttrs, inputHandlers }">
         <b-input-group class="root">
@@ -60,7 +59,10 @@
         </ul>
       </template>
     </b-form-tags>
-    <p v-if="total > 0">
+    <p
+      v-if="total > 0"
+      class="mt-2"
+    >
       Total tips: <b>{{ total }} pln</b>
     </p>
   </div>

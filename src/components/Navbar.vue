@@ -61,7 +61,6 @@
           </p>
           <form
             ref="form"
-            @submit.stop.prevent="handleSubmit"
           >
             <b-form-group
               invalid-feedback="Archive name is required"
