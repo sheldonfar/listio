@@ -9,7 +9,7 @@
     >
       Toggle Settings
     </b-button>
-    <b-collapse id="settings-collapse" :visible="settingsExpanded" class="mt-2">
+    <b-collapse id="settings-collapse" :visible="settingsExpanded">
       <div class="mx-2 my-2 my-md-0">
         <b-input-group
           size="lg"
