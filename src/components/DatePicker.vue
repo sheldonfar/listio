@@ -10,7 +10,7 @@
         </b-button>
       </template>
       <label
-        class="form-control border-left-0"
+        class="form-control border-left-0 pl-0"
         role="button"
       >
         {{ new Date(value).toLocaleDateString('pl-PL') }}

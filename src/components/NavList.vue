@@ -3,10 +3,11 @@
     <div class="table-responsive">
       <b-table
         hover
-        class="record-table"
+        class="record-table w-100"
         bordered
         :items="records"
         :fields="fields"
+        @row-clicked="handleRowClicked"
       >
         <template #cell(date)="data">
           <DatePicker
@@ -33,24 +34,6 @@
           {{ data.item.value * hourlyRate }} pln
         </template>
 
-        <template #cell(actions)="data">
-          <b-button
-            class="mr-2"
-            variant="info"
-            :disabled="isRecordEditMode"
-            @click="handleEnableRecordEditMode(data.item.id)"
-          >
-            Edit
-          </b-button>
-          <b-button
-            class="mr-2"
-            variant="dark"
-            @click="handleRemoveRecord(data.item.id)"
-          >
-            Delete
-          </b-button>
-        </template>
-
         <template #custom-foot>
           <tr>
             <th>
@@ -69,21 +52,42 @@
               />
             </th>
             <th />
-            <th />
           </tr>
           <tr>
             <th />
             <th>{{ totalHours }} hours</th>
             <th>{{ totalMoney }} pln</th>
-            <th /> 
           </tr>
+        </template>
+
+        <template #row-details="row">
+          <b-button
+            class="mr-2"
+            variant="info"
+            :disabled="isRecordEditMode"
+            @click="handleEnableRecordEditMode(row.item.id)"
+          >
+            Edit
+          </b-button>
+          <b-button
+            class="mr-2"
+            variant="dark"
+            @click="handleRemoveRecord(row.item.id)"
+          >
+            Delete
+          </b-button>
         </template>
       </b-table>
     </div>
   
-    <Tips :list-id="selectedList.id" />
+    <div class="px-2 pb-2">
+      <Tips
+        class="mb-3"
+        :list-id="selectedList.id"
+      />
 
-    <Interests :list-id="selectedList.id" />
+      <Interests :list-id="selectedList.id" />
+    </div>
   </b-card>
 </template>
 
@@ -115,7 +119,6 @@ export default {
                     label: "# of hours",
                 },
                 "money",
-                "actions"
             ]
         };
     },
@@ -123,7 +126,9 @@ export default {
         ...mapGetters(["lists", "getListRecords", "hourlyRate", "selectedList"]),
         records() {
             const listId = this.selectedList.id;
-            return this.getListRecords(listId).sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+            return this.getListRecords(listId)
+            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+            .map(record => ({ ...record, _showDetails: false }));
         },
         totalMoney() {
             return this.records.reduce((acc, record) => acc + record.value * this.hourlyRate, 0);
@@ -133,6 +138,9 @@ export default {
         }
     },
     methods: {
+        handleRowClicked(item) {
+          this.$set(item, '_showDetails', !item._showDetails)
+        },
         handleEnableRecordEditMode(recordId) {
             this.isRecordEditMode = true;
             this.focusedRecordId = recordId;
@@ -185,11 +193,12 @@ export default {
 }
 
 .record-table {
-  width: max-content;
+  min-width: max-content;
+  max-width: 800px;
 }
 
 .value-input {
-  width: 80px;
+  width: 75px;
   max-width: fit-content;
 }
 </style>
