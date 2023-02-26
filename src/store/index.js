@@ -22,6 +22,8 @@ const getters = {
 
     return acc + records.reduce((recordsAcc, record) => recordsAcc + record.value, 0)
   }, 0),
+  totalHoursCount: (store, getters) =>
+    store.lists.lists.reduce((acc, list) => acc + getters.getListRecords(list.id).length, 0),
   totalSalary: (store, getters) => getters.totalHours * store.settings.hourlyRate,
   totalCardTips: (store, getters) => store.lists.lists.reduce((acc, list) => {
     const tips = getters.getListTipsByType(list.id, 'card')

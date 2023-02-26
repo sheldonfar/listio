@@ -1,7 +1,7 @@
 <template>
   <b-card no-body class="mt-4 p-2">
     <p>
-      Total Hours: <b>{{ totalHours }} hours</b>
+      Total Hours (<strong>{{ totalHoursCount }}</strong>): <b>{{ totalHours }} hours</b>
     </p>
     <p>
       Total Tips (<strong>{{ totalTipsCount }}</strong>) Earnings:
@@ -12,6 +12,7 @@
     <p>
       Total Procedure (<strong>{{ totalInterestsCount }}</strong>) Earnings: <b>{{ totalInterests }} pln</b>
     </p>
+    <p>Total Money (no cash tips): <b>{{ totalMoneyNoCashTips }} pln</b></p>
     <p>
       Total Money:
       <b>{{ totalSalary }} pln</b> salary +
@@ -29,6 +30,7 @@ export default {
   computed: {
     ...mapGetters([
       'totalHours',
+      'totalHoursCount',
       'totalCashTips',
       'totalCashTipsCount',
       'totalCardTips',
@@ -38,6 +40,7 @@ export default {
       'totalInterests',
       'totalInterestsCount',
       'totalSalary',
+      'totalMoneyNoCashTips',
       'totalMoney',
     ]),
   },

@@ -7,8 +7,10 @@ export const EDIT_INTEREST_RATE = 'settings/EDIT_INTEREST_RATE'
 export const SET_SETTINGS = 'settings/SET_SETTINGS'
 export const SAVE_SETTINGS = 'settings/SAVE_SETTINGS'
 export const LOAD_SETTINGS = 'settings/LOAD_SETTINGS'
+export const TOGGLE_SETTINGS_EXPANDED = 'settings/TOGGLE_SETTINGS_EXPANDED'
 
 const state = {
+  expanded: true,
   hourlyRate: 15,
   interestRate: 10,
   taxRate: 23,
@@ -18,11 +20,14 @@ const getters = {
   hourlyRate: store => store.hourlyRate,
   interestRate: store => store.interestRate,
   taxRate: store => store.taxRate,
+  settingsExpanded: store => store.expanded,
 }
 
 const mutations = {
   [SET_SETTINGS](state, settings) {
-    state.settings = settings
+    Object.keys(settings).forEach(key => {
+      state[key] = settings[key]
+    })
   },
   [EDIT_HOURLY_RATE](state, rate) {
     state.hourlyRate = rate
@@ -32,6 +37,9 @@ const mutations = {
   },
   [EDIT_TAX_RATE](state, rate) {
     state.taxRate = rate
+  },
+  [TOGGLE_SETTINGS_EXPANDED](state, expanded) {
+    state.expanded = expanded
   },
 }
 
@@ -48,12 +56,19 @@ const actions = {
     context.commit(EDIT_INTEREST_RATE, rate)
     await context.dispatch(SAVE_SETTINGS)
   },
+  async [TOGGLE_SETTINGS_EXPANDED](context, expanded) {
+    context.commit(TOGGLE_SETTINGS_EXPANDED, expanded)
+    await context.dispatch(SAVE_SETTINGS)
+  },
   async [LOAD_SETTINGS](context) {
     const settings = loadStore('settings')
-    context.commit(SET_SETTINGS, settings)
+
+    if (settings) {
+      context.commit(SET_SETTINGS, settings)
+    }
   },
   [SAVE_SETTINGS](context) {
-    saveToStore('settings', context.state.settings)
+    saveToStore('settings', context.state)
   },
 }
 
