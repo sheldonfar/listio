@@ -14,6 +14,7 @@
         role="button"
         font-scale="1.5"
         icon="list"
+        class="mr-3"
       >
         NavBar
       </b-icon>

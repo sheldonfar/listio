@@ -11,6 +11,7 @@
           </b-input-group-text>
         </b-input-group-prepend>
         <b-form-input
+          aria-label="Hourly rate"
           class="settings-input"
           type="number"
           :value="hourlyRate"
@@ -29,6 +30,7 @@
           </b-input-group-text>
         </b-input-group-prepend>
         <b-form-input
+          aria-label="Tax rate"
           class="settings-input"
           type="number"
           :value="taxRate"
@@ -47,6 +49,7 @@
           </b-input-group-text>
         </b-input-group-prepend>
         <b-form-input
+          aria-label="Interest rate"
           class="settings-input"
           type="number"
           :value="interestRate"
@@ -93,7 +96,7 @@ export default {
 
 <style scoped>
 .settings-input {
-  width: 70px
+  width: 75px;
 }
 
 .prepend-group-text {

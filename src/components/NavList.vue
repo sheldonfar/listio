@@ -45,6 +45,7 @@
             <th>
               <b-form-input
                 v-model="newRecordValue"
+                aria-label="Number of hours"
                 class="value-input"
                 type="number"
                 min="0"

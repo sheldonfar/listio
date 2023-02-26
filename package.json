@@ -9,7 +9,6 @@
     "deploy": "node scripts/gh-pages-deploy.mjs"
   },
   "dependencies": {
-    "@vue/devtools-api": "^6.2.1",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.28.0",

@@ -1,6 +1,7 @@
 <template>
   <div>
     <b-navbar
+      tag="div"
       fixed="top"
       type="dark"
       variant="dark"
@@ -32,7 +33,7 @@
         Close
       </b-button>
 
-      <b-navbar-nav class="ml-auto d-flex align-items-center">
+      <b-navbar-nav tag="div" class="ml-auto d-flex align-items-center">
         <span class="text-light">
           {{ totalHours }}h / {{ totalMoneyNoCashTips }} pln
         </span>
