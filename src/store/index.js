@@ -13,62 +13,38 @@ Vue.use(Vuex)
 const state = {}
 
 const getters = {
-  getProcedureNetValue: (store, getters) => interestId => {
-    return Math.round(getters.getInterestGrossValue(interestId) / (1 + store.settings.taxRate / 100))
-  },
-  getInterestNetValue: (store, getters) => interestId => {
-    return Math.round(getters.getProcedureNetValue(interestId) * store.settings.interestRate / 100)
-  },
-  totalHours: (store, getters) => {
-    return store.lists.lists.reduce((acc, list) => {
-      const records = getters.getListRecords(list.id)
+  getProcedureNetValue: (store, getters) => interestId =>
+    Math.round(getters.getInterestGrossValue(interestId) / (1 + store.settings.taxRate / 100)),
+  getInterestNetValue: (store, getters) => interestId =>
+    Math.round((getters.getProcedureNetValue(interestId) * store.settings.interestRate) / 100),
+  totalHours: (store, getters) => store.lists.lists.reduce((acc, list) => {
+    const records = getters.getListRecords(list.id)
 
-      return acc + records.reduce((recordsAcc, record) => {
-          return recordsAcc + record.value
-      }, 0)
+    return acc + records.reduce((recordsAcc, record) => recordsAcc + record.value, 0)
+  }, 0),
+  totalSalary: (store, getters) => getters.totalHours * store.settings.hourlyRate,
+  totalCardTips: (store, getters) => store.lists.lists.reduce((acc, list) => {
+    const tips = getters.getListTipsByType(list.id, 'card')
+
+    return acc + tips.reduce((tipsAcc, tip) => tipsAcc + tip.value, 0)
+  }, 0),
+  totalCashTips: (store, getters) => store.lists.lists.reduce((acc, list) => {
+    const tips = getters.getListTipsByType(list.id, 'cash')
+
+    return acc + tips.reduce((tipsAcc, tip) => tipsAcc + tip.value, 0)
+  }, 0),
+  totalTips: (store, getters) => getters.totalCardTips + getters.totalCashTips,
+  totalInterests: (store, getters) => store.lists.lists.reduce((acc, list) => {
+    const interests = getters.getListInterests(list.id)
+
+    return acc + interests.reduce((interestsAcc, interest) => {
+      const interestNetValue = getters.getInterestNetValue(interest.id)
+
+      return interestsAcc + interestNetValue
     }, 0)
-  },
-  totalSalary: (store, getters) => {
-    return getters.totalHours * store.settings.hourlyRate
-  },
-  totalCardTips: (store, getters) => { 
-      return store.lists.lists.reduce((acc, list) => {
-          const tips = getters.getListTipsByType(list.id, 'card')
-
-          return acc + tips.reduce((tipsAcc, tip) => {
-              return tipsAcc + tip.value
-          }, 0)
-      }, 0)
-  },
-  totalCashTips: (store, getters) => {
-      return store.lists.lists.reduce((acc, list) => {
-          const tips = getters.getListTipsByType(list.id, 'cash')
-
-          return acc + tips.reduce((tipsAcc, tip) => {
-              return tipsAcc + tip.value
-          }, 0)
-      }, 0)
-  },
-  totalTips: (store, getters) => {
-      return getters.totalCardTips + getters.totalCashTips
-  },
-  totalInterests: (store, getters) => {
-      return store.lists.lists.reduce((acc, list) => {
-          const interests = getters.getListInterests(list.id)
-
-          return acc + interests.reduce((interestsAcc, interest) => {
-              const interestNetValue = getters.getInterestNetValue(interest.id)
-
-              return interestsAcc + interestNetValue
-          }, 0)
-      }, 0)   
-  },
-  totalMoneyNoCashTips: (store, getters) => {
-    return getters.totalSalary + getters.totalCardTips + getters.totalInterests
-  },
-  totalMoney: (store, getters) => {
-      return getters.totalSalary + getters.totalTips + getters.totalInterests
-  },
+  }, 0),
+  totalMoneyNoCashTips: (store, getters) => getters.totalSalary + getters.totalCardTips + getters.totalInterests,
+  totalMoney: (store, getters) => getters.totalSalary + getters.totalTips + getters.totalInterests,
 }
 
 const mutations = {}
@@ -88,7 +64,7 @@ const store = new Vuex.Store({
     interests,
     settings,
     archives,
-  }
+  },
 })
 
 export default store

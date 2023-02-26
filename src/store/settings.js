@@ -21,45 +21,45 @@ const getters = {
 }
 
 const mutations = {
-  [SET_SETTINGS] (state, settings) {
+  [SET_SETTINGS](state, settings) {
     state.settings = settings
   },
-  [EDIT_HOURLY_RATE] (state, rate) {
+  [EDIT_HOURLY_RATE](state, rate) {
     state.hourlyRate = rate
   },
-  [EDIT_INTEREST_RATE] (state, rate) {
+  [EDIT_INTEREST_RATE](state, rate) {
     state.interestRate = rate
   },
   [EDIT_TAX_RATE](state, rate) {
     state.taxRate = rate
-  }
+  },
 }
 
 const actions = {
-  async [EDIT_HOURLY_RATE] (context, rate) {
+  async [EDIT_HOURLY_RATE](context, rate) {
     context.commit(EDIT_HOURLY_RATE, rate)
     await context.dispatch(SAVE_SETTINGS)
   },
-  async [EDIT_TAX_RATE] (context, rate) {
+  async [EDIT_TAX_RATE](context, rate) {
     context.commit(EDIT_TAX_RATE, rate)
     await context.dispatch(SAVE_SETTINGS)
   },
-  async [EDIT_INTEREST_RATE] (context, rate) {
+  async [EDIT_INTEREST_RATE](context, rate) {
     context.commit(EDIT_INTEREST_RATE, rate)
     await context.dispatch(SAVE_SETTINGS)
   },
-  async [LOAD_SETTINGS] (context) {
+  async [LOAD_SETTINGS](context) {
     const settings = loadStore('settings')
     context.commit(SET_SETTINGS, settings)
   },
-  [SAVE_SETTINGS] (context) {
+  [SAVE_SETTINGS](context) {
     saveToStore('settings', context.state.settings)
-  }
+  },
 }
 
 export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 }

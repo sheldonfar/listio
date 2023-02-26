@@ -10,7 +10,11 @@
       Total Procedure Earnings: <b>{{ totalInterests }} pln</b>
     </p>
     <p>
-      Total Money: <b>{{ totalSalary }} pln</b> salary + <b>{{ totalTips }} pln</b> tips + <b>{{ totalInterests }} pln</b> procedure earnings = <b>{{ totalMoney }} pln</b>
+      Total Money:
+      <b>{{ totalSalary }} pln</b> salary +
+      <b>{{ totalTips }} pln</b> tips +
+      <b>{{ totalInterests }} pln</b> procedure earnings =
+      <b>{{ totalMoney }} pln</b>
     </p>
   </div>
 </template>
@@ -19,18 +23,18 @@
 import { mapGetters } from 'vuex'
 
 export default {
-    computed: {
-        ...mapGetters([
-            "totalHours", 
-            "totalCashTips",
-            "totalCardTips",
-            "totalTips",
-            "totalInterests",
-            "totalSalary",
-            "totalMoney"
-        ]),
-        
-    },
+  computed: {
+    ...mapGetters([
+      'totalHours',
+      'totalCashTips',
+      'totalCardTips',
+      'totalTips',
+      'totalInterests',
+      'totalSalary',
+      'totalMoney',
+    ]),
+
+  },
 }
 </script>
 

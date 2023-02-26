@@ -89,61 +89,61 @@ import { mapGetters, mapActions } from 'vuex'
 import { ADD_INTEREST, REMOVE_INTEREST } from '@/store/interests'
 
 export default {
-    props: ['listId'],
-    data: function () {
-      return {
-        discountPercent: '',
-      }
-    },
-    computed: {
-        ...mapGetters(["getListInterests", "getProcedureNetValue", "getInterestNetValue"]),
-        interests() {
-            return this.getListInterests(this.listId);
-        },
-        total() {
-            return this.interests.reduce((acc, interest) => acc + this.getInterestNetValue(interest.id), 0);
-        },
-    },
-    methods: {
-        getInterestDisplayValue(interest) {
-          return `
-            ${interest.value} pln gross
-            ${interest.discountPercent 
-              ? `- ${interest.discountPercent}%` 
-              : ''
-            }
-            = ${this.getInterestNetValue(interest.id) } pln net
-          `
-        },
-        addInterest(inputAttrs) {
-            if (inputAttrs.value.length === 0) {
-              return
-            }
-            
-            const newInterest = {
-                value: +inputAttrs.value,
-                date: new Date().toISOString(),
-                listId: this.listId,
-                discountPercent: +this.discountPercent,
-            }
-
-            this[ADD_INTEREST](newInterest);
-
-            inputAttrs.value = ''
-        },
-        removeInterest(interestId) {
-             this[REMOVE_INTEREST](interestId);
-        },
-        ...mapActions([
-            ADD_INTEREST,
-            REMOVE_INTEREST,
-        ])
+  props: ['listId'],
+  data() {
+    return {
+      discountPercent: '',
     }
+  },
+  computed: {
+    ...mapGetters(['getListInterests', 'getProcedureNetValue', 'getInterestNetValue']),
+    interests() {
+      return this.getListInterests(this.listId)
+    },
+    total() {
+      return this.interests.reduce((acc, interest) => acc + this.getInterestNetValue(interest.id), 0)
+    },
+  },
+  methods: {
+    getInterestDisplayValue(interest) {
+      return `
+            ${interest.value} pln gross
+            ${interest.discountPercent
+    ? `- ${interest.discountPercent}%`
+    : ''
+}
+            = ${this.getInterestNetValue(interest.id)} pln net
+          `
+    },
+    addInterest(inputAttrs) {
+      if (inputAttrs.value.length === 0) {
+        return
+      }
+
+      const newInterest = {
+        value: +inputAttrs.value,
+        date: new Date().toISOString(),
+        listId: this.listId,
+        discountPercent: +this.discountPercent,
+      }
+
+      this[ADD_INTEREST](newInterest)
+
+      inputAttrs.value = ''
+    },
+    removeInterest(interestId) {
+      this[REMOVE_INTEREST](interestId)
+    },
+    ...mapActions([
+      ADD_INTEREST,
+      REMOVE_INTEREST,
+    ]),
+  },
 }
 </script>
 
 <style scoped>
-.root { 
+.root {
   width: 500px;
   max-width: 100%;
 }

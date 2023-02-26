@@ -79,7 +79,7 @@
         </template>
       </b-table>
     </div>
-  
+
     <div class="px-2 pb-2">
       <Tips
         class="mb-3"
@@ -100,90 +100,90 @@ import Interests from './Interests.vue'
 import DatePicker from './DatePicker.vue'
 
 export default {
-    name: "NavList",
-    components: { Tips, Interests, DatePicker },
-    data: function () {
-        return {
-            focusedRecordId: undefined,
-            isEditMode: false,
-            isCreateMode: false,
-            isRecordEditMode: false,
-            newRecordDate: new Date().toISOString(),
-            newRecordValue: "",
-            fields: [
-                {
-                    key: "date"
-                },
-                {
-                    key: "value",
-                    label: "# of hours",
-                },
-                "money",
-            ]
-        };
+  name: 'NavList',
+  components: { Tips, Interests, DatePicker },
+  data() {
+    return {
+      focusedRecordId: undefined,
+      isEditMode: false,
+      isCreateMode: false,
+      isRecordEditMode: false,
+      newRecordDate: new Date().toISOString(),
+      newRecordValue: '',
+      fields: [
+        {
+          key: 'date',
+        },
+        {
+          key: 'value',
+          label: '# of hours',
+        },
+        'money',
+      ],
+    }
+  },
+  computed: {
+    ...mapGetters(['lists', 'getListRecords', 'hourlyRate', 'selectedList']),
+    records() {
+      const listId = this.selectedList.id
+      return this.getListRecords(listId)
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        .map(record => ({ ...record, _showDetails: false }))
     },
-    computed: {
-        ...mapGetters(["lists", "getListRecords", "hourlyRate", "selectedList"]),
-        records() {
-            const listId = this.selectedList.id;
-            return this.getListRecords(listId)
-            .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
-            .map(record => ({ ...record, _showDetails: false }));
-        },
-        totalMoney() {
-            return this.records.reduce((acc, record) => acc + record.value * this.hourlyRate, 0);
-        },
-        totalHours() {
-            return this.records.reduce((acc, record) => acc + record.value, 0);
-        }
+    totalMoney() {
+      return this.records.reduce((acc, record) => acc + record.value * this.hourlyRate, 0)
     },
-    methods: {
-        handleRowClicked(item) {
-          this.$set(item, '_showDetails', !item._showDetails)
-        },
-        handleEnableRecordEditMode(recordId) {
-            this.isRecordEditMode = true;
-            this.focusedRecordId = recordId;
-        },
-        handleAddRecord(listId) {
-            const newRecord = {
-                value: +this.newRecordValue,
-                date: this.newRecordDate,
-                listId
-            };
-            this[ADD_RECORD](newRecord);
-            this.newRecordValue = "";
-            this.newRecordDate = new Date().toISOString();
-        },
-        handleRemoveRecord(recordId) {
-            this[REMOVE_RECORD](recordId);
-        },
-        handleEditRecordDate(value, recordId) {
-            const oldRecord = this.records.find(record => record.id === recordId);
-            const newRecord = {
-                ...oldRecord,
-                date: value
-            };
-            this[EDIT_RECORD](newRecord);
-            this.isRecordEditMode = false;
-            this.focusedRecordId = undefined;
-        },
-        handleEditRecordValue(e, recordId) {
-            const oldRecord = this.records.find(record => record.id === recordId);
-            const newRecord = {
-                ...oldRecord,
-                value: +e.target.value
-            };
-            this[EDIT_RECORD](newRecord);
-            this.isRecordEditMode = false;
-            this.focusedRecordId = undefined;
-        },
-        ...mapActions([
-            ADD_RECORD,
-            EDIT_RECORD,
-            REMOVE_RECORD
-        ])
+    totalHours() {
+      return this.records.reduce((acc, record) => acc + record.value, 0)
     },
+  },
+  methods: {
+    handleRowClicked(item) {
+      this.$set(item, '_showDetails', !item._showDetails)
+    },
+    handleEnableRecordEditMode(recordId) {
+      this.isRecordEditMode = true
+      this.focusedRecordId = recordId
+    },
+    handleAddRecord(listId) {
+      const newRecord = {
+        value: +this.newRecordValue,
+        date: this.newRecordDate,
+        listId,
+      }
+      this[ADD_RECORD](newRecord)
+      this.newRecordValue = ''
+      this.newRecordDate = new Date().toISOString()
+    },
+    handleRemoveRecord(recordId) {
+      this[REMOVE_RECORD](recordId)
+    },
+    handleEditRecordDate(value, recordId) {
+      const oldRecord = this.records.find(record => record.id === recordId)
+      const newRecord = {
+        ...oldRecord,
+        date: value,
+      }
+      this[EDIT_RECORD](newRecord)
+      this.isRecordEditMode = false
+      this.focusedRecordId = undefined
+    },
+    handleEditRecordValue(e, recordId) {
+      const oldRecord = this.records.find(record => record.id === recordId)
+      const newRecord = {
+        ...oldRecord,
+        value: +e.target.value,
+      }
+      this[EDIT_RECORD](newRecord)
+      this.isRecordEditMode = false
+      this.focusedRecordId = undefined
+    },
+    ...mapActions([
+      ADD_RECORD,
+      EDIT_RECORD,
+      REMOVE_RECORD,
+    ]),
+  },
 }
 </script>
 

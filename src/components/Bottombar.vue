@@ -17,7 +17,7 @@
       >
         NavBar
       </b-icon>
-      
+
       <b-navbar-nav class="d-flex align-items-center">
         <b-nav-item
           v-for="list in lists"
@@ -128,62 +128,64 @@
     </b-sidebar>
   </div>
 </template>
-  
-  <script>
-  import { mapGetters, mapActions } from 'vuex'
-  import { EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST } from '@/store/lists'
 
-  const DEFAULT_LIST_NAME = 'My new list'
-  export default {
-    data() {
-      return {
-        newListName: DEFAULT_LIST_NAME,
-        newListNameState: null,
-        editListName: '',
-        editListNameState: null,
-      }
-    },
-    computed: {
-      ...mapGetters(["lists", "selectedList"]),
-    },
-    methods: {
-        ...mapActions([EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST]),
-        checkFormValidity() {
-          const valid = this.$refs.form.checkValidity()
-          this.newListNameState = valid
-          return valid
-        },
-        resetNewListModal() {
-          this.newListName = DEFAULT_LIST_NAME
-          this.newListNameState = null
-        },
-        resetEditListModal() {
-          this.editListName = ''
-          this.editListNameState = null
-        },
-        handleAddList() {
-          const newList = {
-              name: this.newListName,
-          };
-          this[ADD_LIST](newList);
-        },
-        handleRemoveList() {
-          this[REMOVE_LIST](this.selectedList.id);
-        },
-        handleEditListName() {
-          const newList = {
-              ...this.selectedList,
-              name: this.editListName,
-          };
-          this[EDIT_LIST](newList);
-        },
-        handleSelectList(listId) {
-          this[SELECT_LIST](listId);
-        },
+<script>
+import { mapGetters, mapActions } from 'vuex'
+import {
+  EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST,
+} from '@/store/lists'
+
+const DEFAULT_LIST_NAME = 'My new list'
+export default {
+  data() {
+    return {
+      newListName: DEFAULT_LIST_NAME,
+      newListNameState: null,
+      editListName: '',
+      editListNameState: null,
     }
-  }
-  </script>
-  
+  },
+  computed: {
+    ...mapGetters(['lists', 'selectedList']),
+  },
+  methods: {
+    ...mapActions([EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST]),
+    checkFormValidity() {
+      const valid = this.$refs.form.checkValidity()
+      this.newListNameState = valid
+      return valid
+    },
+    resetNewListModal() {
+      this.newListName = DEFAULT_LIST_NAME
+      this.newListNameState = null
+    },
+    resetEditListModal() {
+      this.editListName = ''
+      this.editListNameState = null
+    },
+    handleAddList() {
+      const newList = {
+        name: this.newListName,
+      }
+      this[ADD_LIST](newList)
+    },
+    handleRemoveList() {
+      this[REMOVE_LIST](this.selectedList.id)
+    },
+    handleEditListName() {
+      const newList = {
+        ...this.selectedList,
+        name: this.editListName,
+      }
+      this[EDIT_LIST](newList)
+    },
+    handleSelectList(listId) {
+      this[SELECT_LIST](listId)
+    },
+  },
+}
+</script>
+
   <style lang="scss" scoped>
-  
+
   </style>

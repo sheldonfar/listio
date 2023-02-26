@@ -65,12 +65,12 @@ import { EDIT_HOURLY_RATE, EDIT_TAX_RATE, EDIT_INTEREST_RATE } from '@/store/set
 export default {
   computed: {
     ...mapGetters(['hourlyRate', 'taxRate', 'interestRate']),
-    records () {
+    records() {
       const listId = this.lists[this.focusedIndex].id
       const records = this.getListRecords(listId)
 
       return records
-    }
+    },
   },
   methods: {
     handleEditHourlyRate(value) {
@@ -86,8 +86,8 @@ export default {
       EDIT_HOURLY_RATE,
       EDIT_TAX_RATE,
       EDIT_INTEREST_RATE,
-    ])
-  }
+    ]),
+  },
 }
 </script>
 

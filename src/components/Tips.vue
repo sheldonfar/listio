@@ -75,52 +75,52 @@ import { ADD_TIP, REMOVE_TIP } from '@/store/tips'
 import TipTypes from '@/constants/tipTypes'
 
 export default {
-    props: ['listId'],
-    data: function () {
-      return {
-        selectedTipType: TipTypes[0].value,
-        tipTypes: TipTypes,
-      }
-    },
-    computed: {
-        ...mapGetters(["getListTips"]),
-        tips() {
-            return this.getListTips(this.listId);
-        },
-        total() {
-            return this.tips.reduce((acc, tip) => acc + tip.value, 0);
-        },
-    },
-    methods: {
-        addTip(inputAttrs) {
-            if (inputAttrs.value.length === 0) {
-              return
-            }
-            
-            const newTip = {
-                value: +inputAttrs.value,
-                date: new Date().toISOString(),
-                listId: this.listId,
-                type: this.selectedTipType,
-            }
-
-            this[ADD_TIP](newTip);
-
-            inputAttrs.value = ''
-        },
-        removeTip(tipId) {
-             this[REMOVE_TIP](tipId);
-        },
-        ...mapActions([
-            ADD_TIP,
-            REMOVE_TIP
-        ])
+  props: ['listId'],
+  data() {
+    return {
+      selectedTipType: TipTypes[0].value,
+      tipTypes: TipTypes,
     }
+  },
+  computed: {
+    ...mapGetters(['getListTips']),
+    tips() {
+      return this.getListTips(this.listId)
+    },
+    total() {
+      return this.tips.reduce((acc, tip) => acc + tip.value, 0)
+    },
+  },
+  methods: {
+    addTip(inputAttrs) {
+      if (inputAttrs.value.length === 0) {
+        return
+      }
+
+      const newTip = {
+        value: +inputAttrs.value,
+        date: new Date().toISOString(),
+        listId: this.listId,
+        type: this.selectedTipType,
+      }
+
+      this[ADD_TIP](newTip)
+
+      inputAttrs.value = ''
+    },
+    removeTip(tipId) {
+      this[REMOVE_TIP](tipId)
+    },
+    ...mapActions([
+      ADD_TIP,
+      REMOVE_TIP,
+    ]),
+  },
 }
 </script>
 
 <style scoped>
-.root { 
+.root {
   max-width: 300px;
 }
 </style>

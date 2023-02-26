@@ -13,72 +13,72 @@ export const EDIT_RECORD = 'records/EDIT_RECORD'
 export const REMOVE_RECORD = 'records/REMOVE_RECORD'
 
 const state = {
-  records: []
+  records: [],
 }
 
 const getters = {
-  getListRecords: store => listId => store.records.filter(record => record.listId === listId)
+  getListRecords: store => listId => store.records.filter(record => record.listId === listId),
 }
 
 const mutations = {
-  [SET_RECORDS] (state, records) {
+  [SET_RECORDS](state, records) {
     state.records = records
   },
-  [ADD_RECORD] (state, record) {
+  [ADD_RECORD](state, record) {
     const newRecord = {
       ...record,
-      id: uuid()
+      id: uuid(),
     }
     state.records.push(newRecord)
   },
-  [EDIT_RECORD] (state, record) {
+  [EDIT_RECORD](state, record) {
     const oldRecord = state.records.find(item => item.id === record.id)
     Object.assign(oldRecord, record)
   },
-  [CLEAR_RECORDS] (state) {
+  [CLEAR_RECORDS](state) {
     state.records = []
   },
-  [REMOVE_RECORD] (state, recordId) {
+  [REMOVE_RECORD](state, recordId) {
     state.records = state.records.filter(({ id }) => id !== recordId)
-  }
+  },
 }
 
 const actions = {
-  async [ADD_RECORD] (context, record) {
+  async [ADD_RECORD](context, record) {
     context.commit(ADD_RECORD, record)
     await context.dispatch(SAVE_RECORDS)
   },
-  async [EDIT_RECORD] (context, record) {
+  async [EDIT_RECORD](context, record) {
     context.commit(EDIT_RECORD, record)
     await context.dispatch(SAVE_RECORDS)
   },
-  async [REMOVE_RECORD] (context, recordId) {
+  async [REMOVE_RECORD](context, recordId) {
     context.commit(REMOVE_RECORD, recordId)
     await context.dispatch(SAVE_RECORDS)
   },
-  async [LOAD_RECORDS] (context) {
+  async [LOAD_RECORDS](context) {
     const records = loadStore('records')
 
     if (records) {
       context.commit(SET_RECORDS, records)
     }
   },
-  async [CLEAR_RECORDS] (context) {
+  async [CLEAR_RECORDS](context) {
     context.commit(CLEAR_RECORDS)
     await context.dispatch(SAVE_RECORDS)
   },
-  async [SET_RECORDS] (context, records) {
+  async [SET_RECORDS](context, records) {
     context.commit(SET_RECORDS, records)
     await context.dispatch(SAVE_RECORDS)
   },
-  [SAVE_RECORDS] (context) {
+  [SAVE_RECORDS](context) {
     saveToStore('records', context.state.records)
-  }
+  },
 }
 
 export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 }

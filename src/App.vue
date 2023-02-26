@@ -38,7 +38,7 @@ export default {
     Totals,
     Bottombar,
   },
-   created () {
+  created() {
     this[LOAD_SETTINGS]()
     this[LOAD_LISTS]()
     this[LOAD_RECORDS]()
@@ -54,8 +54,8 @@ export default {
       LOAD_TIPS,
       LOAD_INTERESTS,
       LOAD_ARCHIVES,
-    ])
-  }
+    ]),
+  },
 }
 </script>
 

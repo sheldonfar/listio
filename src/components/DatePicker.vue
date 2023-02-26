@@ -34,32 +34,32 @@
     </b-modal>
   </div>
 </template>
-  
-  <script>
-  export default {
-      name: "DatePicker",
-      props: ['value'],
-      data: function () {
-          return {
-            dateValue: new Date(this.value),
-            dateContext: {},
-          }
-      },
-      methods: {
-        onInputClick() {
-          this.$refs['calendar-modal'].show()
-        },
-        onContext(ctx) {
-            if (this.dateContext.selectedDate && ctx.selectedDate.toISOString() !== this.dateContext.selectedDate.toISOString()) {
-                this.$refs['calendar-modal'].hide()
-                this.$emit('dateSelected', ctx.selectedDate.toISOString())
-            }
-            this.dateContext = ctx
-        }
-      },
-  }
-  </script>
-  
+
+<script>
+export default {
+  name: 'DatePicker',
+  props: ['value'],
+  data() {
+    return {
+      dateValue: new Date(this.value),
+      dateContext: {},
+    }
+  },
+  methods: {
+    onInputClick() {
+      this.$refs['calendar-modal'].show()
+    },
+    onContext(ctx) {
+      const selectedDate = this.dateContext.selectedDate
+      if (selectedDate && ctx.selectedDate.toISOString() !== selectedDate.toISOString()) {
+        this.$refs['calendar-modal'].hide()
+        this.$emit('dateSelected', ctx.selectedDate.toISOString())
+      }
+      this.dateContext = ctx
+    },
+  },
+}
+</script>
+
   <style scoped>
   </style>
-  

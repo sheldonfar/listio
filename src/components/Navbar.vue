@@ -117,10 +117,10 @@ export default {
   },
   computed: {
     ...mapGetters([
-      "archives",
-      "currentArchive",
-      "totalHours",
-      "totalMoneyNoCashTips",
+      'archives',
+      'currentArchive',
+      'totalHours',
+      'totalMoneyNoCashTips',
     ]),
   },
   methods: {
@@ -130,10 +130,10 @@ export default {
       return valid
     },
     resetModal() {
-      this.archiveName = new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
+      this.archiveName = new Date().toLocaleString('default', { month: 'long', year: 'numeric' })
       this.archiveNameState = null
     },
-    handleOk(event) { 
+    handleOk(event) {
       event.preventDefault()
       this.handleArchiveRecors()
     },
@@ -141,7 +141,7 @@ export default {
       this[CLEAR_CURRENT_ARCHIVE]()
     },
     handleLoadArchive(archiveId) {
-      this[LOAD_ARCHIVE](archiveId);
+      this[LOAD_ARCHIVE](archiveId)
     },
     handleArchiveRecors() {
       if (!this.checkFormValidity()) {
@@ -152,7 +152,7 @@ export default {
         name: this.archiveName,
       }
 
-      this[ADD_ARCHIVE](archive);
+      this[ADD_ARCHIVE](archive)
 
       this.$nextTick(() => {
         this.$bvModal.hide('confirm-archive-modal')
@@ -162,8 +162,8 @@ export default {
       ADD_ARCHIVE,
       LOAD_ARCHIVE,
       CLEAR_CURRENT_ARCHIVE,
-    ])
-  }
+    ]),
+  },
 }
 </script>
 
