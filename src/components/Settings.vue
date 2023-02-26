@@ -10,8 +10,8 @@
       Toggle Settings
     </b-button>
     <b-collapse id="settings-collapse" :visible="settingsExpanded">
-      <div class="d-flex flex-column flex-md-row mt-0 mt-md-2">
-        <div class="mx-2 my-2 my-md-0">
+      <div class="d-flex flex-column flex-lg-row mt-0 mt-lg-2">
+        <div class="mx-2 my-2 my-lg-0">
           <b-input-group
             size="lg"
             append="PLN"
@@ -30,7 +30,7 @@
             />
           </b-input-group>
         </div>
-        <div class="mx-2 my-2 my-md-0">
+        <div class="mx-2 my-2 my-lg-0">
           <b-input-group
             size="lg"
             append="%"
@@ -49,7 +49,7 @@
             />
           </b-input-group>
         </div>
-        <div class="mx-2 my-2 my-md-0">
+        <div class="mx-2 my-2 my-lg-0">
           <b-input-group
             size="lg"
             append="%"
