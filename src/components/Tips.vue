@@ -63,7 +63,7 @@
       v-if="total > 0"
       class="mt-2"
     >
-      Total tips: <b>{{ total }} pln</b>
+      Total tips (<strong>{{ tips.length }}</strong>) earnings: <b>{{ total }} pln</b>
     </p>
   </div>
 </template>

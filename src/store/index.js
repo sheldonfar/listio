@@ -28,12 +28,17 @@ const getters = {
 
     return acc + tips.reduce((tipsAcc, tip) => tipsAcc + tip.value, 0)
   }, 0),
+  totalCardTipsCount: (store, getters) =>
+    store.lists.lists.reduce((acc, list) => acc + getters.getListTipsByType(list.id, 'card').length, 0),
   totalCashTips: (store, getters) => store.lists.lists.reduce((acc, list) => {
     const tips = getters.getListTipsByType(list.id, 'cash')
 
     return acc + tips.reduce((tipsAcc, tip) => tipsAcc + tip.value, 0)
   }, 0),
+  totalCashTipsCount: (store, getters) =>
+    store.lists.lists.reduce((acc, list) => acc + getters.getListTipsByType(list.id, 'cash').length, 0),
   totalTips: (store, getters) => getters.totalCardTips + getters.totalCashTips,
+  totalTipsCount: (store, getters) => getters.totalCardTipsCount + getters.totalCardTipsCount,
   totalInterests: (store, getters) => store.lists.lists.reduce((acc, list) => {
     const interests = getters.getListInterests(list.id)
 
@@ -43,6 +48,8 @@ const getters = {
       return interestsAcc + interestNetValue
     }, 0)
   }, 0),
+  totalInterestsCount: (store, getters) =>
+    store.lists.lists.reduce((acc, list) => acc + getters.getListInterests(list.id).length, 0),
   totalMoneyNoCashTips: (store, getters) => getters.totalSalary + getters.totalCardTips + getters.totalInterests,
   totalMoney: (store, getters) => getters.totalSalary + getters.totalTips + getters.totalInterests,
 }

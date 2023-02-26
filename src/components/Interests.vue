@@ -78,7 +78,7 @@
       v-if="total > 0"
       class="mt-2"
     >
-      Total procedure earnings: <b>{{ total }} pln</b>
+      Total procedure (<strong>{{ interests.length }}</strong>) earnings: <b>{{ total }} pln</b>
     </p>
   </div>
 </template>
@@ -89,7 +89,9 @@ import { mapGetters, mapActions } from 'vuex'
 import { ADD_INTEREST, REMOVE_INTEREST } from '@/store/interests'
 
 export default {
-  props: ['listId'],
+  props: {
+    listId: { type: String, required: true },
+  },
   data() {
     return {
       discountPercent: '',

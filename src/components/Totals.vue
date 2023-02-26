@@ -4,10 +4,13 @@
       Total Hours: <b>{{ totalHours }} hours</b>
     </p>
     <p>
-      Total Tips: <b>{{ totalCashTips }} pln</b> cash + <b>{{ totalCardTips }} pln</b> card = <b>{{ totalTips }} pln</b>
+      Total Tips (<strong>{{ totalTipsCount }}</strong>) Earnings:
+      <b>{{ totalCashTips }} pln</b> cash (<strong>{{ totalCashTipsCount }}</strong>)
+      + <b>{{ totalCardTips }} pln</b> card (<strong>{{ totalCardTipsCount }}</strong>)
+      = <b>{{ totalTips }} pln</b>
     </p>
     <p>
-      Total Procedure Earnings: <b>{{ totalInterests }} pln</b>
+      Total Procedure (<strong>{{ totalInterestsCount }}</strong>) Earnings: <b>{{ totalInterests }} pln</b>
     </p>
     <p>
       Total Money:
@@ -27,13 +30,16 @@ export default {
     ...mapGetters([
       'totalHours',
       'totalCashTips',
+      'totalCashTipsCount',
       'totalCardTips',
+      'totalCardTipsCount',
       'totalTips',
+      'totalTipsCount',
       'totalInterests',
+      'totalInterestsCount',
       'totalSalary',
       'totalMoney',
     ]),
-
   },
 }
 </script>
