@@ -69,6 +69,6 @@ export default {
 
 #content {
   padding-top: 60px;
-  padding-bottom: 60px;
+  padding-bottom: 65px;
 }
 </style>

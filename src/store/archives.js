@@ -13,6 +13,7 @@ export const LOAD_ARCHIVE = 'archives/LOAD_ARCHIVE'
 export const CLEAR_CURRENT_ARCHIVE = 'archives/CLEAR_CURRENT_ARCHIVE'
 
 export const SAVE_ARCHIVES = 'archives/SAVE_ARCHIVES'
+export const SAVE_CURRENT_ARCHIVE_ID = 'archives/SAVE_CURRENT_ARCHIVE_ID'
 export const LOAD_ARCHIVES = 'archives/LOAD_ARCHIVES'
 export const SET_ARCHIVES = 'archives/SET_ARCHIVES'
 
@@ -66,13 +67,30 @@ const actions = {
     await context.dispatch(CLEAR_TIPS)
   },
   async [CLEAR_CURRENT_ARCHIVE](context) {
+    const currentArchiveId = context.state.currentArchiveId
     context.commit(CLEAR_CURRENT_ARCHIVE)
+
+    const oldArchive = context.state.archives.find(archive => archive.id === currentArchiveId)
+
+    if (oldArchive) {
+      await context.dispatch(
+        EDIT_ARCHIVE,
+        {
+          id: currentArchiveId,
+          interests: context.rootState.interests.interests,
+          records: context.rootState.records.records,
+          tips: context.rootState.tips.tips,
+        },
+      )
+    }
 
     const pendingArchive = loadStore('pendingArchive')
 
     await context.dispatch(SET_INTERESTS, pendingArchive.interests)
     await context.dispatch(SET_RECORDS, pendingArchive.records)
     await context.dispatch(SET_TIPS, pendingArchive.tips)
+    await context.dispatch(SAVE_CURRENT_ARCHIVE_ID)
+    await context.dispatch(SAVE_ARCHIVES)
 
     removeFromStore('pendingArchive')
   },
@@ -94,6 +112,7 @@ const actions = {
     await context.dispatch(SET_INTERESTS, archive.interests)
     await context.dispatch(SET_RECORDS, archive.records)
     await context.dispatch(SET_TIPS, archive.tips)
+    await context.dispatch(SAVE_CURRENT_ARCHIVE_ID)
   },
   async [EDIT_ARCHIVE](context, archive) {
     context.commit(EDIT_ARCHIVE, archive)
@@ -101,17 +120,30 @@ const actions = {
   },
   async [REMOVE_ARCHIVE](context, archiveId) {
     context.commit(REMOVE_ARCHIVE, archiveId)
-    await context.dispatch(SAVE_ARCHIVES)
+
+    if (archiveId === context.state.currentArchiveId) {
+      await context.dispatch(CLEAR_CURRENT_ARCHIVE)
+    } else {
+      await context.dispatch(SAVE_ARCHIVES)
+    }
   },
   async [LOAD_ARCHIVES](context) {
     const archives = loadStore('archives')
+    const currentArchiveId = loadStore('currentArchiveId')
 
     if (archives) {
       context.commit(SET_ARCHIVES, archives)
     }
+
+    if (currentArchiveId) {
+      context.commit(LOAD_ARCHIVE, currentArchiveId)
+    }
   },
   [SAVE_ARCHIVES](context) {
     saveToStore('archives', context.state.archives)
+  },
+  [SAVE_CURRENT_ARCHIVE_ID](context) {
+    saveToStore('currentArchiveId', context.state.currentArchiveId)
   },
 }
 

@@ -89,31 +89,95 @@
       <div class="px-3 py-2">
         <nav class="mb-3">
           <b-nav vertical>
-            <b-nav-item
+            <div
               v-for="archive in archives"
               :key="archive.id"
-              v-b-toggle.sidebar-variant
-              @click="handleLoadArchive(archive.id)"
             >
-              {{ archive.name }}
-            </b-nav-item>
+              <b-nav-item
+                v-b-toggle.sidebar-variant
+                :disabled="currentArchive && (archive.id === currentArchive.id)"
+                @click="handleLoadArchive(archive.id)"
+              >
+                {{ archive.name }}
+              </b-nav-item>
+              <ul v-if="currentArchive && (archive.id === currentArchive.id)" class="nav flex-column">
+                <li
+                  v-b-modal.confirm-rename-archive-modal
+                  class="nav-item not-collapsed pl-4"
+                >
+                  Rename
+                </li>
+                <li
+                  v-b-modal.confirm-remove-archive-modal
+                  class="nav-item not-collapsed pl-4"
+                >
+                  Delete
+                </li>
+              </ul>
+            </div>
           </b-nav>
         </nav>
       </div>
     </b-sidebar>
+
+    <b-modal
+      id="confirm-rename-archive-modal"
+      ref="rename-archive-modal"
+      title="Enter new name of this archive"
+      @hidden="resetEditArchiveModal"
+      @ok="handleRenameArchive"
+    >
+      <p class="mb-4">
+        Please type new name of the archive:
+      </p>
+      <form
+        ref="form"
+      >
+        <b-form-group
+          invalid-feedback="Archive name is required"
+          :state="newArchiveNameState"
+        >
+          <b-form-input
+            v-model="newArchiveName"
+            autofocus
+            :state="newArchiveNameState"
+            required
+          />
+        </b-form-group>
+      </form>
+    </b-modal>
+
+    <b-modal
+      id="confirm-remove-archive-modal"
+      ref="remove-archive-modal"
+      title="Remove archive?"
+      @ok="handleRemoveArchive"
+    >
+      <p class="my-4">
+        Click OK to remove the archive
+      </p>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-import { ADD_ARCHIVE, LOAD_ARCHIVE, CLEAR_CURRENT_ARCHIVE } from '@/store/archives'
+import {
+  ADD_ARCHIVE,
+  LOAD_ARCHIVE,
+  CLEAR_CURRENT_ARCHIVE,
+  EDIT_ARCHIVE,
+  REMOVE_ARCHIVE,
+} from '@/store/archives'
 
 export default {
   data() {
     return {
-      archiveName: new Date().toLocaleString('default', { month: 'long', year: 'numeric' }),
+      archiveName: '',
       archiveNameState: null,
+      newArchiveName: '',
+      newArchiveNameState: null,
     }
   },
   computed: {
@@ -123,6 +187,29 @@ export default {
       'totalHours',
       'totalMoneyNoCashTips',
     ]),
+
+    defaultArchiveName() {
+      let name
+      let index = 0
+      let nameFree = false
+      do {
+        name = new Date().toLocaleString('default', { month: 'long', year: 'numeric' })
+        if (index > 0) name += ` (${index})`
+        index += 1
+        // eslint-disable-next-line no-loop-func
+        nameFree = this.archives.every(archive => archive.name !== name)
+      } while (!nameFree)
+
+      return name
+    },
+  },
+  watch: {
+    defaultArchiveName: {
+      handler(value) {
+        this.archiveName = value
+      },
+      immediate: true,
+    },
   },
   methods: {
     checkFormValidity() {
@@ -131,8 +218,12 @@ export default {
       return valid
     },
     resetModal() {
-      this.archiveName = new Date().toLocaleString('default', { month: 'long', year: 'numeric' })
+      this.archiveName = this.defaultArchiveName
       this.archiveNameState = null
+    },
+    resetEditArchiveModal() {
+      this.newArchiveName = ''
+      this.newArchiveNameState = null
     },
     handleOk(event) {
       event.preventDefault()
@@ -159,10 +250,21 @@ export default {
         this.$bvModal.hide('confirm-archive-modal')
       })
     },
+    handleRenameArchive() {
+      this[EDIT_ARCHIVE]({
+        id: this.currentArchive.id,
+        name: this.newArchiveName,
+      })
+    },
+    handleRemoveArchive() {
+      this[REMOVE_ARCHIVE](this.currentArchive.id)
+    },
     ...mapActions([
       ADD_ARCHIVE,
       LOAD_ARCHIVE,
       CLEAR_CURRENT_ARCHIVE,
+      EDIT_ARCHIVE,
+      REMOVE_ARCHIVE,
     ]),
   },
 }

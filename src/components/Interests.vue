@@ -36,6 +36,7 @@
           </b-input-group-append>
         </b-input-group>
         <ul
+          v-if="interests.length > 0"
           class="list-unstyled d-inline-flex flex-wrap mb-0"
           aria-live="polite"
           aria-atomic="false"
