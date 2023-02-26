@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4">
+  <b-card no-body class="mt-4 p-2">
     <p>
       Total Hours: <b>{{ totalHours }} hours</b>
     </p>
@@ -19,7 +19,7 @@
       <b>{{ totalInterests }} pln</b> procedure earnings =
       <b>{{ totalMoney }} pln</b>
     </p>
-  </div>
+  </b-card>
 </template>
 
 <script>
