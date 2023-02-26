@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column flex-md-row mb-2 align-self-end align-items-end">
+  <div class="d-flex flex-column mb-2 align-self-end align-items-end">
     <b-button
       variant="link"
       class="text-right"
@@ -10,62 +10,64 @@
       Toggle Settings
     </b-button>
     <b-collapse id="settings-collapse" :visible="settingsExpanded">
-      <div class="mx-2 my-2 my-md-0">
-        <b-input-group
-          size="lg"
-          append="PLN"
-        >
-          <b-input-group-prepend>
-            <b-input-group-text class="prepend-group-text">
-              Hourly rate
-            </b-input-group-text>
-          </b-input-group-prepend>
-          <b-form-input
-            aria-label="Hourly rate"
-            class="settings-input"
-            type="number"
-            :value="hourlyRate"
-            @change="handleEditHourlyRate"
-          />
-        </b-input-group>
-      </div>
-      <div class="mx-2 my-2 my-md-0">
-        <b-input-group
-          size="lg"
-          append="%"
-        >
-          <b-input-group-prepend>
-            <b-input-group-text class="prepend-group-text">
-              Tax rate
-            </b-input-group-text>
-          </b-input-group-prepend>
-          <b-form-input
-            aria-label="Tax rate"
-            class="settings-input"
-            type="number"
-            :value="taxRate"
-            @change="handleEditTaxRate"
-          />
-        </b-input-group>
-      </div>
-      <div class="mx-2 my-2 my-md-0">
-        <b-input-group
-          size="lg"
-          append="%"
-        >
-          <b-input-group-prepend>
-            <b-input-group-text class="prepend-group-text">
-              Interest rate
-            </b-input-group-text>
-          </b-input-group-prepend>
-          <b-form-input
-            aria-label="Interest rate"
-            class="settings-input"
-            type="number"
-            :value="interestRate"
-            @change="handleEditInterestRate"
-          />
-        </b-input-group>
+      <div class="d-flex flex-column flex-md-row mt-0 mt-md-2">
+        <div class="mx-2 my-2 my-md-0">
+          <b-input-group
+            size="lg"
+            append="PLN"
+          >
+            <b-input-group-prepend>
+              <b-input-group-text class="prepend-group-text">
+                Hourly rate
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-input
+              aria-label="Hourly rate"
+              class="settings-input"
+              type="number"
+              :value="hourlyRate"
+              @change="handleEditHourlyRate"
+            />
+          </b-input-group>
+        </div>
+        <div class="mx-2 my-2 my-md-0">
+          <b-input-group
+            size="lg"
+            append="%"
+          >
+            <b-input-group-prepend>
+              <b-input-group-text class="prepend-group-text">
+                Tax rate
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-input
+              aria-label="Tax rate"
+              class="settings-input"
+              type="number"
+              :value="taxRate"
+              @change="handleEditTaxRate"
+            />
+          </b-input-group>
+        </div>
+        <div class="mx-2 my-2 my-md-0">
+          <b-input-group
+            size="lg"
+            append="%"
+          >
+            <b-input-group-prepend>
+              <b-input-group-text class="prepend-group-text">
+                Interest rate
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-input
+              aria-label="Interest rate"
+              class="settings-input"
+              type="number"
+              :value="interestRate"
+              @change="handleEditInterestRate"
+            />
+          </b-input-group>
+        </div>
       </div>
     </b-collapse>
   </div>
