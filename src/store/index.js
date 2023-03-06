@@ -50,13 +50,13 @@ const getters = {
       return interestsAcc + interestNetValue
     }, 0)
   }, 0),
-  totalInterestsGross: (store, getters) => store.lists.lists.reduce((acc, list) => {
+  totalInterestsGrossNoTax: (store, getters) => store.lists.lists.reduce((acc, list) => {
     const interests = getters.getListInterests(list.id)
 
     return acc + interests.reduce((interestsAcc, interest) => {
-      const interestGrossValue = Math.round((getters.getInterestGrossValue(interest.id) * store.settings.taxRate) / 100)
+      const procedureNetValue = getters.getProcedureNetValue(interest.id)
 
-      return interestsAcc + interestGrossValue
+      return interestsAcc + procedureNetValue
     }, 0)
   }, 0),
   totalInterestsCount: (store, getters) =>

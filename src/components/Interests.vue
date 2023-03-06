@@ -109,14 +109,8 @@ export default {
   },
   methods: {
     getInterestDisplayValue(interest) {
-      return `
-            ${interest.value} pln gross
-            ${interest.discountPercent
-    ? `- ${interest.discountPercent}%`
-    : ''
-}
-            = ${this.getInterestNetValue(interest.id)} pln net
-          `
+      const percent = interest.discountPercent ? `- ${interest.discountPercent}%` : ''
+      return `${interest.value} pln gross ${percent} = ${this.getInterestNetValue(interest.id)} pln net`
     },
     addInterest(inputAttrs) {
       if (inputAttrs.value.length === 0) {

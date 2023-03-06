@@ -21,7 +21,7 @@
       <b>{{ totalMoney }} pln</b>
     </p>
     <p>
-      Required earning saldo: <b>{{ totalInterestsGross }} pln</b>
+      Required earning saldo: <b>{{ totalInterestsGrossNoTax }} pln</b>
       out of <b>{{ requiredEarningsPerHour * totalHours }} pln</b>
       = <b :class="{ 'text-danger': earningSaldo < 0, 'text-success': earningSaldo > 0 }">{{ earningSaldo }} pln</b>
     </p>
@@ -43,7 +43,7 @@ export default {
       'totalTips',
       'totalTipsCount',
       'totalInterests',
-      'totalInterestsGross',
+      'totalInterestsGrossNoTax',
       'totalInterestsCount',
       'totalSalary',
       'totalMoneyNoCashTips',
@@ -52,7 +52,7 @@ export default {
     ]),
 
     earningSaldo() {
-      return this.totalInterestsGross - (this.requiredEarningsPerHour * this.totalHours)
+      return this.totalInterestsGrossNoTax - (this.requiredEarningsPerHour * this.totalHours)
     },
   },
 }
