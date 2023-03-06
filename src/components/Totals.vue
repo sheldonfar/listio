@@ -20,6 +20,11 @@
       <b>{{ totalInterests }} pln</b> procedure earnings =
       <b>{{ totalMoney }} pln</b>
     </p>
+    <p>
+      Required earning saldo: <b>{{ totalInterestsGross }} pln</b>
+      out of <b>{{ requiredEarningsPerHour * totalHours }} pln</b>
+      = <b :class="{ 'text-danger': earningSaldo < 0, 'text-success': earningSaldo > 0 }">{{ earningSaldo }} pln</b>
+    </p>
   </b-card>
 </template>
 
@@ -38,11 +43,17 @@ export default {
       'totalTips',
       'totalTipsCount',
       'totalInterests',
+      'totalInterestsGross',
       'totalInterestsCount',
       'totalSalary',
       'totalMoneyNoCashTips',
       'totalMoney',
+      'requiredEarningsPerHour',
     ]),
+
+    earningSaldo() {
+      return this.totalInterestsGross - (this.requiredEarningsPerHour * this.totalHours)
+    },
   },
 }
 </script>

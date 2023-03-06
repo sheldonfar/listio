@@ -3,6 +3,7 @@ import { loadStore, saveToStore } from '../api'
 export const EDIT_HOURLY_RATE = 'settings/EDIT_HOURLY_RATE'
 export const EDIT_TAX_RATE = 'settings/EDIT_TAX_RATE'
 export const EDIT_INTEREST_RATE = 'settings/EDIT_INTEREST_RATE'
+export const EDIT_REQUIRED_EARNINGS_PER_HOUR = 'settings/EDIT_REQUIRED_EARNINGS_PER_HOUR'
 
 export const SET_SETTINGS = 'settings/SET_SETTINGS'
 export const SAVE_SETTINGS = 'settings/SAVE_SETTINGS'
@@ -14,6 +15,7 @@ const state = {
   hourlyRate: 15,
   interestRate: 10,
   taxRate: 23,
+  requiredEarningsPerHour: 90,
 }
 
 const getters = {
@@ -21,6 +23,7 @@ const getters = {
   interestRate: store => store.interestRate,
   taxRate: store => store.taxRate,
   settingsExpanded: store => store.expanded,
+  requiredEarningsPerHour: store => store.requiredEarningsPerHour,
 }
 
 const mutations = {
@@ -38,6 +41,9 @@ const mutations = {
   [EDIT_TAX_RATE](state, rate) {
     state.taxRate = rate
   },
+  [EDIT_REQUIRED_EARNINGS_PER_HOUR](state, requiredEarningsPerHour) {
+    state.requiredEarningsPerHour = requiredEarningsPerHour
+  },
   [TOGGLE_SETTINGS_EXPANDED](state, expanded) {
     state.expanded = expanded
   },
@@ -54,6 +60,10 @@ const actions = {
   },
   async [EDIT_INTEREST_RATE](context, rate) {
     context.commit(EDIT_INTEREST_RATE, rate)
+    await context.dispatch(SAVE_SETTINGS)
+  },
+  async [EDIT_REQUIRED_EARNINGS_PER_HOUR](context, requiredEarningsPerHour) {
+    context.commit(EDIT_REQUIRED_EARNINGS_PER_HOUR, requiredEarningsPerHour)
     await context.dispatch(SAVE_SETTINGS)
   },
   async [TOGGLE_SETTINGS_EXPANDED](context, expanded) {

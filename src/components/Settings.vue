@@ -68,6 +68,25 @@
             />
           </b-input-group>
         </div>
+        <div class="mx-2 my-2 my-lg-0">
+          <b-input-group
+            size="lg"
+            append="PLN"
+          >
+            <b-input-group-prepend>
+              <b-input-group-text class="prepend-group-text">
+                Required/hour
+              </b-input-group-text>
+            </b-input-group-prepend>
+            <b-form-input
+              aria-label="REPH"
+              class="settings-input"
+              type="number"
+              :value="requiredEarningsPerHour"
+              @change="handleEditInterestRate"
+            />
+          </b-input-group>
+        </div>
       </div>
     </b-collapse>
   </div>
@@ -80,12 +99,13 @@ import {
   EDIT_HOURLY_RATE,
   EDIT_TAX_RATE,
   EDIT_INTEREST_RATE,
+  EDIT_REQUIRED_EARNINGS_PER_HOUR,
   TOGGLE_SETTINGS_EXPANDED,
 } from '@/store/settings'
 
 export default {
   computed: {
-    ...mapGetters(['hourlyRate', 'taxRate', 'interestRate', 'settingsExpanded']),
+    ...mapGetters(['hourlyRate', 'taxRate', 'interestRate', 'settingsExpanded', 'requiredEarningsPerHour']),
   },
   methods: {
     toggleSettingsExpanded() {
@@ -99,6 +119,9 @@ export default {
     },
     handleEditInterestRate(value) {
       this[EDIT_INTEREST_RATE](value)
+    },
+    handleEditRequiredEarningsPerHour(value) {
+      this[EDIT_REQUIRED_EARNINGS_PER_HOUR](value)
     },
     ...mapActions([
       EDIT_HOURLY_RATE,

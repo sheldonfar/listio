@@ -50,6 +50,15 @@ const getters = {
       return interestsAcc + interestNetValue
     }, 0)
   }, 0),
+  totalInterestsGross: (store, getters) => store.lists.lists.reduce((acc, list) => {
+    const interests = getters.getListInterests(list.id)
+
+    return acc + interests.reduce((interestsAcc, interest) => {
+      const interestGrossValue = Math.round((getters.getInterestGrossValue(interest.id) * store.settings.taxRate) / 100)
+
+      return interestsAcc + interestGrossValue
+    }, 0)
+  }, 0),
   totalInterestsCount: (store, getters) =>
     store.lists.lists.reduce((acc, list) => acc + getters.getListInterests(list.id).length, 0),
   totalMoneyNoCashTips: (store, getters) => getters.totalSalary + getters.totalCardTips + getters.totalInterests,
