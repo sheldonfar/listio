@@ -76,7 +76,9 @@ import { ADD_TIP, REMOVE_TIP } from '@/store/tips'
 import TipTypes from '@/constants/tipTypes'
 
 export default {
-  props: ['listId'],
+  props: {
+    listId: { type: String, required: true },
+  },
   data() {
     return {
       selectedTipType: TipTypes[0].value,

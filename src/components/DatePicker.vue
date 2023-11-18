@@ -38,7 +38,9 @@
 <script>
 export default {
   name: 'DatePicker',
-  props: ['value'],
+  props: {
+    value: { type: String, default: null },
+  },
   data() {
     return {
       dateValue: new Date(this.value),
@@ -60,6 +62,3 @@ export default {
   },
 }
 </script>
-
-  <style scoped>
-  </style>

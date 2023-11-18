@@ -107,6 +107,7 @@
 
     <b-sidebar
       id="lists-sidebar"
+      ref="sidebar"
       :title="selectedList.name"
       bg-variant="dark"
       text-variant="light"
@@ -123,10 +124,28 @@
             <b-nav-item v-b-modal.confirm-remove-list-modal>
               Remove list
             </b-nav-item>
+
+            <b-dropdown-divider class="nav-link" />
+
+            <b-nav-item @click="handleExportData">
+              Export Data
+            </b-nav-item>
+
+            <b-nav-item @click="$refs.importFile.click()">
+              Import Data
+            </b-nav-item>
           </b-nav>
         </nav>
       </div>
     </b-sidebar>
+
+    <input
+      ref="importFile"
+      type="file"
+      class="d-none"
+      accept=".json"
+      @change="handleImportData"
+    >
   </div>
 </template>
 
@@ -135,6 +154,10 @@ import { mapGetters, mapActions } from 'vuex'
 import {
   EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST,
 } from '@/store/lists'
+import {
+  EXPORT_STORE,
+  IMPORT_STORE,
+} from '@/store'
 
 const DEFAULT_LIST_NAME = 'My new list'
 export default {
@@ -150,7 +173,7 @@ export default {
     ...mapGetters(['lists', 'selectedList']),
   },
   methods: {
-    ...mapActions([EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST]),
+    ...mapActions([EDIT_LIST, ADD_LIST, REMOVE_LIST, SELECT_LIST, EXPORT_STORE, IMPORT_STORE]),
     checkFormValidity() {
       const valid = this.$refs.form.checkValidity()
       this.newListNameState = valid
@@ -183,10 +206,25 @@ export default {
     handleSelectList(listId) {
       this[SELECT_LIST](listId)
     },
+    handleExportData() {
+      this[EXPORT_STORE]()
+    },
+    handleImportData() {
+      const file = this.$refs.importFile.files[0]
+
+      if (file) {
+        const reader = new FileReader()
+        reader.onload = () => {
+          const store = JSON.parse(reader.result)
+
+          if (store) {
+            this[IMPORT_STORE](store)
+            this.$refs.sidebar.hide()
+          }
+        }
+        reader.readAsText(file)
+      }
+    },
   },
 }
 </script>
-
-  <style lang="scss" scoped>
-
-  </style>

@@ -22,12 +22,7 @@ import Settings from '@/components/Settings.vue'
 import Totals from '@/components/Totals.vue'
 import Bottombar from '@/components/Bottombar.vue'
 
-import { LOAD_LISTS } from '@/store/lists'
-import { LOAD_RECORDS } from '@/store/records'
-import { LOAD_TIPS } from '@/store/tips'
-import { LOAD_INTERESTS } from '@/store/interests'
-import { LOAD_SETTINGS } from '@/store/settings'
-import { LOAD_ARCHIVES } from './store/archives'
+import { LOAD_STORE } from '@/store'
 
 export default {
   name: 'App',
@@ -39,21 +34,11 @@ export default {
     Bottombar,
   },
   created() {
-    this[LOAD_SETTINGS]()
-    this[LOAD_LISTS]()
-    this[LOAD_RECORDS]()
-    this[LOAD_TIPS]()
-    this[LOAD_INTERESTS]()
-    this[LOAD_ARCHIVES]()
+    this[LOAD_STORE]()
   },
   methods: {
     ...mapActions([
-      LOAD_SETTINGS,
-      LOAD_LISTS,
-      LOAD_RECORDS,
-      LOAD_TIPS,
-      LOAD_INTERESTS,
-      LOAD_ARCHIVES,
+      LOAD_STORE,
     ]),
   },
 }

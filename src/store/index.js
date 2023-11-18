@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import lists from './lists'
-import records from './records'
-import tips from './tips'
-import interests from './interests'
-import settings from './settings'
-import archives from './archives'
+import { importStore, exportStore } from '../api'
+
+import lists, { LOAD_LISTS } from './lists'
+import records, { LOAD_RECORDS } from './records'
+import tips, { LOAD_TIPS } from './tips'
+import interests, { LOAD_INTERESTS } from './interests'
+import settings, { LOAD_SETTINGS } from './settings'
+import archives, { LOAD_ARCHIVES } from './archives'
 
 Vue.use(Vuex)
+
+export const IMPORT_STORE = 'store/IMPORT_STORE'
+export const EXPORT_STORE = 'store/EXPORT_STORE'
+export const LOAD_STORE = 'store/LOAD_STORE'
 
 const state = {}
 
@@ -67,7 +73,23 @@ const getters = {
 
 const mutations = {}
 
-const actions = {}
+const actions = {
+  async [IMPORT_STORE](context, store) {
+    importStore(store)
+    context.dispatch(LOAD_STORE)
+  },
+  async [EXPORT_STORE]() {
+    exportStore()
+  },
+  async [LOAD_STORE](context) {
+    context.dispatch(LOAD_SETTINGS)
+    context.dispatch(LOAD_LISTS)
+    context.dispatch(LOAD_RECORDS)
+    context.dispatch(LOAD_TIPS)
+    context.dispatch(LOAD_INTERESTS)
+    context.dispatch(LOAD_ARCHIVES)
+  },
+}
 
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
