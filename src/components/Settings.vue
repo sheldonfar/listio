@@ -83,7 +83,7 @@
               class="settings-input"
               type="number"
               :value="requiredEarningsPerHour"
-              @change="handleEditInterestRate"
+              @change="handleEditRequiredEarningsPerHour"
             />
           </b-input-group>
         </div>
@@ -127,6 +127,7 @@ export default {
       EDIT_HOURLY_RATE,
       EDIT_TAX_RATE,
       EDIT_INTEREST_RATE,
+      EDIT_REQUIRED_EARNINGS_PER_HOUR,
       TOGGLE_SETTINGS_EXPANDED,
     ]),
   },
