@@ -16,16 +16,20 @@
             <b-input-group>
               <input
                 v-model="discountPercent"
-                placeholder="Discount"
+                placeholder="Discount, %"
                 type="number"
                 class="form-control rounded-0"
                 @click.capture.stop
               >
-              <b-input-group-append>
-                <b-input-group-text class="rounded-0">
-                  %
-                </b-input-group-text>
-              </b-input-group-append>
+            </b-input-group>
+            <b-input-group>
+              <input
+                v-model="entryTaxRate"
+                placeholder="VAT, %"
+                class="form-control rounded-0"
+                type="number"
+                @click.capture.stop
+              />
             </b-input-group>
             <b-button
               variant="primary"
@@ -68,6 +72,7 @@
               Amount gross: {{ interest.value }} pln<br>
               Discount percent: {{ interest.discountPercent }}%<br>
               Discount amount: {{ interest.discountPercent * interest.value / 100 }} pln<br>
+              Tax Rate (VAT): {{ interest.taxRate ?? taxRate }}%<br>
               Procedure net: {{ getProcedureNetValue(interest.id) }} pln<br>
               Amount net: {{ getInterestNetValue(interest.id) }} pln<br>
             </b-tooltip>
@@ -96,10 +101,11 @@ export default {
   data() {
     return {
       discountPercent: '',
+      entryTaxRate: '',
     }
   },
   computed: {
-    ...mapGetters(['getListInterests', 'getProcedureNetValue', 'getInterestNetValue']),
+    ...mapGetters(['getListInterests', 'getProcedureNetValue', 'getInterestNetValue', 'taxRate']),
     interests() {
       return this.getListInterests(this.listId)
     },
@@ -122,6 +128,7 @@ export default {
         date: new Date().toISOString(),
         listId: this.listId,
         discountPercent: +this.discountPercent,
+        taxRate: this.entryTaxRate === '' ? this.taxRate : +this.entryTaxRate,
       }
 
       this[ADD_INTEREST](newInterest)
@@ -145,7 +152,7 @@ export default {
   max-width: 100%;
 }
 .root > .form-control {
-  min-width: 90px;
+  min-width: 80px;
 }
 
 </style>

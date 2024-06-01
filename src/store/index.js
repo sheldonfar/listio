@@ -19,8 +19,12 @@ export const LOAD_STORE = 'store/LOAD_STORE'
 const state = {}
 
 const getters = {
-  getProcedureNetValue: (store, getters) => interestId =>
-    Math.round(getters.getInterestGrossValue(interestId) / (1 + store.settings.taxRate / 100)),
+  getProcedureNetValue: (store, getters, rootState, rootGetters) => interestId => {
+    const interest = rootGetters.getInterestById(interestId)
+    const taxRate = interest.taxRate || store.settings.taxRate
+
+    return Math.round(getters.getInterestGrossValue(interestId) / (1 + taxRate / 100))
+  },
   getInterestNetValue: (store, getters) => interestId =>
     Math.round((getters.getProcedureNetValue(interestId) * store.settings.interestRate) / 100),
   totalHours: (store, getters) => store.lists.lists.reduce((acc, list) => {

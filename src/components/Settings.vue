@@ -37,11 +37,11 @@
           >
             <b-input-group-prepend>
               <b-input-group-text class="prepend-group-text">
-                Tax rate
+                VAT
               </b-input-group-text>
             </b-input-group-prepend>
             <b-form-input
-              aria-label="Tax rate"
+              aria-label="VAT"
               class="settings-input"
               type="number"
               :value="taxRate"
